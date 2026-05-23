@@ -15,6 +15,7 @@ import { Route as ConsoleIndexRouteImport } from './routes/console.index'
 import { Route as ConsoleReportsRouteImport } from './routes/console.reports'
 import { Route as ConsoleHealthRouteImport } from './routes/console.health'
 import { Route as ConsoleEntitiesRouteImport } from './routes/console.entities'
+import { Route as ConsoleReportsReport_idRouteImport } from './routes/console.reports.$report_id'
 import { Route as ConsoleGovernanceEscalationsRouteImport } from './routes/console.governance.escalations'
 import { Route as ConsoleGovernanceBreakGlassRouteImport } from './routes/console.governance.break-glass'
 import { Route as ConsoleGovernanceAuditRouteImport } from './routes/console.governance.audit'
@@ -49,6 +50,11 @@ const ConsoleEntitiesRoute = ConsoleEntitiesRouteImport.update({
   path: '/entities',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleReportsReport_idRoute = ConsoleReportsReport_idRouteImport.update({
+  id: '/$report_id',
+  path: '/$report_id',
+  getParentRoute: () => ConsoleReportsRoute,
+} as any)
 const ConsoleGovernanceEscalationsRoute =
   ConsoleGovernanceEscalationsRouteImport.update({
     id: '/governance/escalations',
@@ -72,21 +78,23 @@ export interface FileRoutesByFullPath {
   '/console': typeof ConsoleRouteWithChildren
   '/console/entities': typeof ConsoleEntitiesRoute
   '/console/health': typeof ConsoleHealthRoute
-  '/console/reports': typeof ConsoleReportsRoute
+  '/console/reports': typeof ConsoleReportsRouteWithChildren
   '/console/': typeof ConsoleIndexRoute
   '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
   '/console/governance/break-glass': typeof ConsoleGovernanceBreakGlassRoute
   '/console/governance/escalations': typeof ConsoleGovernanceEscalationsRoute
+  '/console/reports/$report_id': typeof ConsoleReportsReport_idRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/console/entities': typeof ConsoleEntitiesRoute
   '/console/health': typeof ConsoleHealthRoute
-  '/console/reports': typeof ConsoleReportsRoute
+  '/console/reports': typeof ConsoleReportsRouteWithChildren
   '/console': typeof ConsoleIndexRoute
   '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
   '/console/governance/break-glass': typeof ConsoleGovernanceBreakGlassRoute
   '/console/governance/escalations': typeof ConsoleGovernanceEscalationsRoute
+  '/console/reports/$report_id': typeof ConsoleReportsReport_idRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -94,11 +102,12 @@ export interface FileRoutesById {
   '/console': typeof ConsoleRouteWithChildren
   '/console/entities': typeof ConsoleEntitiesRoute
   '/console/health': typeof ConsoleHealthRoute
-  '/console/reports': typeof ConsoleReportsRoute
+  '/console/reports': typeof ConsoleReportsRouteWithChildren
   '/console/': typeof ConsoleIndexRoute
   '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
   '/console/governance/break-glass': typeof ConsoleGovernanceBreakGlassRoute
   '/console/governance/escalations': typeof ConsoleGovernanceEscalationsRoute
+  '/console/reports/$report_id': typeof ConsoleReportsReport_idRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
     | '/console/governance/audit'
     | '/console/governance/break-glass'
     | '/console/governance/escalations'
+    | '/console/reports/$report_id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/console/governance/audit'
     | '/console/governance/break-glass'
     | '/console/governance/escalations'
+    | '/console/reports/$report_id'
   id:
     | '__root__'
     | '/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/console/governance/audit'
     | '/console/governance/break-glass'
     | '/console/governance/escalations'
+    | '/console/reports/$report_id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -184,6 +196,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleEntitiesRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/reports/$report_id': {
+      id: '/console/reports/$report_id'
+      path: '/$report_id'
+      fullPath: '/console/reports/$report_id'
+      preLoaderRoute: typeof ConsoleReportsReport_idRouteImport
+      parentRoute: typeof ConsoleReportsRoute
+    }
     '/console/governance/escalations': {
       id: '/console/governance/escalations'
       path: '/governance/escalations'
@@ -208,10 +227,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ConsoleReportsRouteChildren {
+  ConsoleReportsReport_idRoute: typeof ConsoleReportsReport_idRoute
+}
+
+const ConsoleReportsRouteChildren: ConsoleReportsRouteChildren = {
+  ConsoleReportsReport_idRoute: ConsoleReportsReport_idRoute,
+}
+
+const ConsoleReportsRouteWithChildren = ConsoleReportsRoute._addFileChildren(
+  ConsoleReportsRouteChildren,
+)
+
 interface ConsoleRouteChildren {
   ConsoleEntitiesRoute: typeof ConsoleEntitiesRoute
   ConsoleHealthRoute: typeof ConsoleHealthRoute
-  ConsoleReportsRoute: typeof ConsoleReportsRoute
+  ConsoleReportsRoute: typeof ConsoleReportsRouteWithChildren
   ConsoleIndexRoute: typeof ConsoleIndexRoute
   ConsoleGovernanceAuditRoute: typeof ConsoleGovernanceAuditRoute
   ConsoleGovernanceBreakGlassRoute: typeof ConsoleGovernanceBreakGlassRoute
@@ -221,7 +252,7 @@ interface ConsoleRouteChildren {
 const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleEntitiesRoute: ConsoleEntitiesRoute,
   ConsoleHealthRoute: ConsoleHealthRoute,
-  ConsoleReportsRoute: ConsoleReportsRoute,
+  ConsoleReportsRoute: ConsoleReportsRouteWithChildren,
   ConsoleIndexRoute: ConsoleIndexRoute,
   ConsoleGovernanceAuditRoute: ConsoleGovernanceAuditRoute,
   ConsoleGovernanceBreakGlassRoute: ConsoleGovernanceBreakGlassRoute,
