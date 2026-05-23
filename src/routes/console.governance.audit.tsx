@@ -160,10 +160,11 @@ function AuditCenter() {
             <KV k="chain_hash" v={<span className="mono break-all">{selected.chain_hash}</span>} />
             <div>
               <div className="text-[10px] uppercase tracking-wider text-muted-foreground">details</div>
-              <pre className="mono mt-1 max-h-64 overflow-auto rounded-sm border border-border bg-surface-2 p-2 text-[11px]">
+              <ScrollBox copyValue={JSON.stringify(selected.details, null, 2)} maxHeight={240}>
                 {JSON.stringify(selected.details, null, 2)}
-              </pre>
+              </ScrollBox>
             </div>
+
           </div>
         )}
       </DetailDrawer>
