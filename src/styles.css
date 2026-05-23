@@ -79,6 +79,12 @@
     font-family: var(--font-sans);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
-  .mono { font-family: var(--font-mono); font-variant-ligatures: none; }
+  .mono { font-family: var(--font-mono); font-variant-ligatures: none; overflow-wrap: anywhere; word-break: break-all; }
+  /* Console: keep cards/cells from leaking content */
+  th, td { overflow-wrap: anywhere; word-break: break-word; }
+  /* Prevent long unbroken tokens (IDs, hashes, URLs) from blowing layouts */
+  h1, h2, h3, h4, p, span, div, li, a { overflow-wrap: anywhere; }
 }
