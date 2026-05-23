@@ -2,6 +2,7 @@ import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useBreakGlassGrants } from "@/hooks/useConsole";
 import {
+  CopyableId,
   DetailDrawer,
   DisabledAction,
   FilterBar,
@@ -10,6 +11,7 @@ import {
   ScopeBoundaryBanner,
   SelectFilter,
   StatusPill,
+  Tabs,
   Table,
   TD,
   TH,
@@ -25,11 +27,21 @@ export const Route = createFileRoute("/console/governance/break-glass")({
 
 const PAGE = 25;
 
+const STATUS_TABS = [
+  { id: "all", label: "All", status: "" },
+  { id: "active", label: "Active", status: "active" },
+  { id: "used", label: "Used", status: "used" },
+  { id: "reviewed", label: "Reviewed", status: "reviewed" },
+  { id: "expired", label: "Expired", status: "expired" },
+  { id: "revoked", label: "Revoked", status: "revoked" },
+];
+
 function BreakGlassPage() {
   const [skip, setSkip] = React.useState(0);
-  const [status, setStatus] = React.useState("");
+  const [statusTab, setStatusTab] = React.useState("all");
   const [action, setAction] = React.useState("");
   const [selected, setSelected] = React.useState<ConsoleBreakGlassGrantRow | null>(null);
+  const status = STATUS_TABS.find((t) => t.id === statusTab)?.status ?? "";
   const { data } = useBreakGlassGrants({
     skip,
     take: PAGE,
@@ -49,16 +61,15 @@ function BreakGlassPage() {
       <ScopeBoundaryBanner tone="warn">
         Break-glass justification is intentionally excluded from list views and detail drawers.
       </ScopeBoundaryBanner>
+      <Tabs
+        tabs={STATUS_TABS.map((t) => ({ id: t.id, label: t.label }))}
+        active={statusTab}
+        onChange={(id) => {
+          setStatusTab(id);
+          setSkip(0);
+        }}
+      />
       <FilterBar>
-        <SelectFilter
-          value={status}
-          onChange={(v) => {
-            setStatus(v);
-            setSkip(0);
-          }}
-          placeholder="Status"
-          options={["active", "used", "expired", "reviewed", "revoked"]}
-        />
         <SelectFilter
           value={action}
           onChange={(v) => {
@@ -68,7 +79,11 @@ function BreakGlassPage() {
           placeholder="Action type"
           options={["READ_CAPSULE_OVERRIDE", "DECRYPT_OVERRIDE", "POLICY_OVERRIDE", "ACCESS_RESET"]}
         />
+        <div className="ml-auto text-[11px] text-muted-foreground">
+          {data?.total ?? 0} matching grant(s)
+        </div>
       </FilterBar>
+
       <Table>
         <THead>
           <TR>
