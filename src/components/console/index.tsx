@@ -143,22 +143,26 @@ export function MetricCard({
   hint?: string;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-md border border-border bg-card p-4">
+    <div className="flex min-w-0 flex-col gap-2 overflow-hidden rounded-md border border-border bg-card p-4">
       <div className="flex items-start justify-between gap-2">
-        <div className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+        <div className="min-w-0 break-words text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           {label}
         </div>
-        {readiness && <ReadinessBadge value={readiness} />}
+        {readiness && <ReadinessBadge className="shrink-0" value={readiness} />}
       </div>
-      <div className="flex items-baseline gap-1.5">
-        <div className="text-2xl font-semibold tabular-nums text-foreground">
+      <div className="flex min-w-0 flex-wrap items-baseline gap-1.5">
+        <div className="min-w-0 break-words text-2xl font-semibold tabular-nums text-foreground">
           {value === null || value === undefined ? "—" : value}
         </div>
         {unit && <span className="text-xs text-muted-foreground">{unit}</span>}
       </div>
-      {hint && <div className="text-[11px] text-muted-foreground">{hint}</div>}
-      {warning && <div className="text-[11px] text-warning">{warning}</div>}
-      {source && <SourceMappingBadge source={source} />}
+      {hint && <div className="break-words text-[11px] text-muted-foreground">{hint}</div>}
+      {warning && <div className="break-words text-[11px] text-warning">{warning}</div>}
+      {source && (
+        <div className="min-w-0 overflow-hidden">
+          <SourceMappingBadge source={source} />
+        </div>
+      )}
     </div>
   );
 }
