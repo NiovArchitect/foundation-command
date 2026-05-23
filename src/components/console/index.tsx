@@ -86,10 +86,10 @@ export function SecurityClassBadge({ value }: { value: ConsoleSecurityClass }) {
 /* ---------------- SourceMappingBadge ---------------- */
 export function SourceMappingBadge({ source }: { source: ConsoleDataSource }) {
   return (
-    <span className="mono inline-flex items-center gap-1 rounded-sm border border-border bg-surface px-1.5 py-0.5 text-[10px] text-muted-foreground">
+    <span className="mono inline-flex max-w-full flex-wrap items-center gap-1 break-all rounded-sm border border-border bg-surface px-1.5 py-0.5 text-[10px] text-muted-foreground">
       <span className="uppercase text-foreground/70">{source.kind}</span>
       <span>·</span>
-      <span>{source.ref}</span>
+      <span className="min-w-0 break-all">{source.ref}</span>
       {!source.existing && <span className="text-warning">· proposed</span>}
     </span>
   );
@@ -143,22 +143,26 @@ export function MetricCard({
   hint?: string;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-md border border-border bg-card p-4">
+    <div className="flex min-w-0 flex-col gap-2 overflow-hidden rounded-md border border-border bg-card p-4">
       <div className="flex items-start justify-between gap-2">
-        <div className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+        <div className="min-w-0 break-words text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           {label}
         </div>
-        {readiness && <ReadinessBadge value={readiness} />}
+        {readiness && <ReadinessBadge className="shrink-0" value={readiness} />}
       </div>
-      <div className="flex items-baseline gap-1.5">
-        <div className="text-2xl font-semibold tabular-nums text-foreground">
+      <div className="flex min-w-0 flex-wrap items-baseline gap-1.5">
+        <div className="min-w-0 break-words text-2xl font-semibold tabular-nums text-foreground">
           {value === null || value === undefined ? "—" : value}
         </div>
         {unit && <span className="text-xs text-muted-foreground">{unit}</span>}
       </div>
-      {hint && <div className="text-[11px] text-muted-foreground">{hint}</div>}
-      {warning && <div className="text-[11px] text-warning">{warning}</div>}
-      {source && <SourceMappingBadge source={source} />}
+      {hint && <div className="break-words text-[11px] text-muted-foreground">{hint}</div>}
+      {warning && <div className="break-words text-[11px] text-warning">{warning}</div>}
+      {source && (
+        <div className="min-w-0 overflow-hidden">
+          <SourceMappingBadge source={source} />
+        </div>
+      )}
     </div>
   );
 }
@@ -178,18 +182,18 @@ export function CommandCenterSection({
   banner?: React.ReactNode;
 }) {
   return (
-    <section className="rounded-md border border-border bg-surface">
-      <header className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
-        <div>
-          <h2 className="text-sm font-semibold text-foreground">{title}</h2>
+    <section className="overflow-hidden rounded-md border border-border bg-surface">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3">
+        <div className="min-w-0">
+          <h2 className="break-words text-sm font-semibold text-foreground">{title}</h2>
           {description && (
-            <p className="mt-0.5 text-[11px] text-muted-foreground">{description}</p>
+            <p className="mt-0.5 break-words text-[11px] text-muted-foreground">{description}</p>
           )}
         </div>
-        {readiness && <ReadinessBadge value={readiness} />}
+        {readiness && <ReadinessBadge className="shrink-0" value={readiness} />}
       </header>
       {banner}
-      <div className="p-4">{children}</div>
+      <div className="min-w-0 p-4">{children}</div>
     </section>
   );
 }
@@ -495,18 +499,18 @@ export function DomainReadinessCard({
   capabilities?: string[];
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-md border border-border bg-card p-4">
-      <div className="flex items-center justify-between gap-2">
-        <h3 className="text-sm font-semibold text-foreground">{title}</h3>
-        <ReadinessBadge value={readiness} />
+    <div className="flex min-w-0 flex-col gap-3 overflow-hidden rounded-md border border-border bg-card p-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h3 className="min-w-0 break-words text-sm font-semibold text-foreground">{title}</h3>
+        <ReadinessBadge className="shrink-0" value={readiness} />
       </div>
-      <p className="text-[12px] leading-relaxed text-muted-foreground">{description}</p>
+      <p className="break-words text-[12px] leading-relaxed text-muted-foreground">{description}</p>
       {capabilities && capabilities.length > 0 && (
         <ul className="flex flex-wrap gap-1.5">
           {capabilities.map((c) => (
             <li
               key={c}
-              className="rounded-sm border border-border bg-surface px-1.5 py-0.5 text-[10px] text-muted-foreground"
+              className="break-words rounded-sm border border-border bg-surface px-1.5 py-0.5 text-[10px] text-muted-foreground"
             >
               {c}
             </li>
