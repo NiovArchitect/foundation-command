@@ -6,13 +6,17 @@
  * `USE_MOCK` is true (the default), so this file is dormant scaffolding.
  *
  * Safety boundaries (must be preserved):
- *  - Read-only: every call is an HTTP GET. No write verbs are issued.
- *  - No auth logic: it relies on the browser's authenticated session cookie
- *    (`credentials: "include"`); it never handles tokens, login, or grants.
+ *  - Read-only: every call is an HTTP GET. No write verbs are issued, and it
+ *    never calls `POST /api/v1/auth/login`.
+ *  - Bearer auth, fail-closed: each request sends `Authorization: Bearer <token>`
+ *    from the in-memory operator token in `consoleAuth`. If no token is set it
+ *    throws BEFORE any network call — no unauthenticated request is ever sent.
+ *    Cookies are not used (the backend is Bearer-based, not cookie-based).
  *  - No new backend surface: it only calls the seven landed read endpoints
  *    under `/api/v1/console/*`.
  */
 import { CONSOLE_API_BASE_URL } from "@/api/consoleConfig";
+import { getConsoleBearerToken } from "@/api/consoleAuth";
 import type { ConsoleApi } from "@/api/consoleApi";
 import type {
   ConsoleAuditEvent,
@@ -50,13 +54,28 @@ function toQuery(params: object = {}): string {
   return s ? `?${s}` : "";
 }
 
+/**
+ * Build the read-only, Bearer-authenticated request init shared by every call.
+ * Fails closed: if no operator token is present it throws before any fetch, so
+ * an unauthenticated request is never issued. No cookies are sent.
+ */
+function authedRequestInit(): RequestInit {
+  const token = getConsoleBearerToken();
+  if (!token) {
+    throw new ConsoleApiError(401, "Console live mode requires an operator Bearer token");
+  }
+  return {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+}
+
 /** Issue a read-only GET against the Console API and parse JSON. */
 async function getJson<T>(path: string): Promise<T> {
-  const res = await fetch(`${CONSOLE_API_BASE_URL}${path}`, {
-    method: "GET",
-    credentials: "include",
-    headers: { Accept: "application/json" },
-  });
+  const res = await fetch(`${CONSOLE_API_BASE_URL}${path}`, authedRequestInit());
   if (!res.ok) {
     throw new ConsoleApiError(res.status, `Console API ${res.status} for GET ${path}`);
   }
@@ -108,11 +127,10 @@ export const realConsoleApi: ConsoleApi = {
     | { ok: true; report: ConsoleReport; generated_at: string }
     | { ok: false; code: "REPORT_NOT_FOUND" }
   > {
-    const res = await fetch(`${CONSOLE_API_BASE_URL}/reports/${encodeURIComponent(report_id)}`, {
-      method: "GET",
-      credentials: "include",
-      headers: { Accept: "application/json" },
-    });
+    const res = await fetch(
+      `${CONSOLE_API_BASE_URL}/reports/${encodeURIComponent(report_id)}`,
+      authedRequestInit(),
+    );
     if (res.status === 404) {
       return { ok: false as const, code: "REPORT_NOT_FOUND" as const };
     }
