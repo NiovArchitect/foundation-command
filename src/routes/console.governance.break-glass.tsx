@@ -100,8 +100,9 @@ function BreakGlassPage() {
         <tbody>
           {data?.items.map((g) => (
             <TR key={g.grant_id} onClick={() => setSelected(g)}>
-              <TD mono className="max-w-[200px] truncate">{g.grant_id}</TD>
-              <TD mono className="max-w-[180px] truncate">{g.source_entity_id}</TD>
+              <TD><CopyableId value={g.grant_id} /></TD>
+              <TD><CopyableId value={g.source_entity_id} /></TD>
+
               <TD>{g.action_type}</TD>
               <TD>
                 <StatusPill
