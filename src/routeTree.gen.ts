@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleIndexRouteImport } from './routes/console.index'
+import { Route as ConsoleReportsRouteImport } from './routes/console.reports'
 import { Route as ConsoleHealthRouteImport } from './routes/console.health'
 import { Route as ConsoleEntitiesRouteImport } from './routes/console.entities'
 import { Route as ConsoleGovernanceEscalationsRouteImport } from './routes/console.governance.escalations'
@@ -31,6 +32,11 @@ const IndexRoute = IndexRouteImport.update({
 const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleReportsRoute = ConsoleReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => ConsoleRoute,
 } as any)
 const ConsoleHealthRoute = ConsoleHealthRouteImport.update({
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/console': typeof ConsoleRouteWithChildren
   '/console/entities': typeof ConsoleEntitiesRoute
   '/console/health': typeof ConsoleHealthRoute
+  '/console/reports': typeof ConsoleReportsRoute
   '/console/': typeof ConsoleIndexRoute
   '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
   '/console/governance/break-glass': typeof ConsoleGovernanceBreakGlassRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/console/entities': typeof ConsoleEntitiesRoute
   '/console/health': typeof ConsoleHealthRoute
+  '/console/reports': typeof ConsoleReportsRoute
   '/console': typeof ConsoleIndexRoute
   '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
   '/console/governance/break-glass': typeof ConsoleGovernanceBreakGlassRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/console': typeof ConsoleRouteWithChildren
   '/console/entities': typeof ConsoleEntitiesRoute
   '/console/health': typeof ConsoleHealthRoute
+  '/console/reports': typeof ConsoleReportsRoute
   '/console/': typeof ConsoleIndexRoute
   '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
   '/console/governance/break-glass': typeof ConsoleGovernanceBreakGlassRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/console'
     | '/console/entities'
     | '/console/health'
+    | '/console/reports'
     | '/console/'
     | '/console/governance/audit'
     | '/console/governance/break-glass'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/'
     | '/console/entities'
     | '/console/health'
+    | '/console/reports'
     | '/console'
     | '/console/governance/audit'
     | '/console/governance/break-glass'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/console'
     | '/console/entities'
     | '/console/health'
+    | '/console/reports'
     | '/console/'
     | '/console/governance/audit'
     | '/console/governance/break-glass'
@@ -149,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/console/'
       preLoaderRoute: typeof ConsoleIndexRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/reports': {
+      id: '/console/reports'
+      path: '/reports'
+      fullPath: '/console/reports'
+      preLoaderRoute: typeof ConsoleReportsRouteImport
       parentRoute: typeof ConsoleRoute
     }
     '/console/health': {
@@ -192,6 +211,7 @@ declare module '@tanstack/react-router' {
 interface ConsoleRouteChildren {
   ConsoleEntitiesRoute: typeof ConsoleEntitiesRoute
   ConsoleHealthRoute: typeof ConsoleHealthRoute
+  ConsoleReportsRoute: typeof ConsoleReportsRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
   ConsoleGovernanceAuditRoute: typeof ConsoleGovernanceAuditRoute
   ConsoleGovernanceBreakGlassRoute: typeof ConsoleGovernanceBreakGlassRoute
@@ -201,6 +221,7 @@ interface ConsoleRouteChildren {
 const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleEntitiesRoute: ConsoleEntitiesRoute,
   ConsoleHealthRoute: ConsoleHealthRoute,
+  ConsoleReportsRoute: ConsoleReportsRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
   ConsoleGovernanceAuditRoute: ConsoleGovernanceAuditRoute,
   ConsoleGovernanceBreakGlassRoute: ConsoleGovernanceBreakGlassRoute,
