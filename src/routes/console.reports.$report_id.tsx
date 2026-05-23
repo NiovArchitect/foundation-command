@@ -181,13 +181,13 @@ function ReportDetail() {
           {sec.drilldown && sec.drilldown.length > 0 && (
             <div className="flex flex-wrap gap-1.5 pt-1">
               {sec.drilldown.map((d) => (
-                <Link
+                <a
                   key={d.href}
-                  to={d.href}
+                  href={d.href}
                   className="rounded-sm border border-border bg-surface-2 px-2 py-1 text-[11px] text-foreground hover:bg-accent/40"
                 >
                   {d.label} →
-                </Link>
+                </a>
               ))}
             </div>
           )}
