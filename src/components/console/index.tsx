@@ -499,18 +499,18 @@ export function DomainReadinessCard({
   capabilities?: string[];
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-md border border-border bg-card p-4">
-      <div className="flex items-center justify-between gap-2">
-        <h3 className="text-sm font-semibold text-foreground">{title}</h3>
-        <ReadinessBadge value={readiness} />
+    <div className="flex min-w-0 flex-col gap-3 overflow-hidden rounded-md border border-border bg-card p-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h3 className="min-w-0 break-words text-sm font-semibold text-foreground">{title}</h3>
+        <ReadinessBadge className="shrink-0" value={readiness} />
       </div>
-      <p className="text-[12px] leading-relaxed text-muted-foreground">{description}</p>
+      <p className="break-words text-[12px] leading-relaxed text-muted-foreground">{description}</p>
       {capabilities && capabilities.length > 0 && (
         <ul className="flex flex-wrap gap-1.5">
           {capabilities.map((c) => (
             <li
               key={c}
-              className="rounded-sm border border-border bg-surface px-1.5 py-0.5 text-[10px] text-muted-foreground"
+              className="break-words rounded-sm border border-border bg-surface px-1.5 py-0.5 text-[10px] text-muted-foreground"
             >
               {c}
             </li>
