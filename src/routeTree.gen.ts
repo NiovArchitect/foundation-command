@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleIndexRouteImport } from './routes/console.index'
 import { Route as ConsoleReportsRouteImport } from './routes/console.reports'
 import { Route as ConsoleHealthRouteImport } from './routes/console.health'
+import { Route as ConsoleGatewayRouteImport } from './routes/console.gateway'
 import { Route as ConsoleEntitiesRouteImport } from './routes/console.entities'
 import { Route as ConsoleReportsReport_idRouteImport } from './routes/console.reports.$report_id'
 import { Route as ConsoleGovernanceEscalationsRouteImport } from './routes/console.governance.escalations'
@@ -43,6 +44,11 @@ const ConsoleReportsRoute = ConsoleReportsRouteImport.update({
 const ConsoleHealthRoute = ConsoleHealthRouteImport.update({
   id: '/health',
   path: '/health',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleGatewayRoute = ConsoleGatewayRouteImport.update({
+  id: '/gateway',
+  path: '/gateway',
   getParentRoute: () => ConsoleRoute,
 } as any)
 const ConsoleEntitiesRoute = ConsoleEntitiesRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
   '/console/entities': typeof ConsoleEntitiesRoute
+  '/console/gateway': typeof ConsoleGatewayRoute
   '/console/health': typeof ConsoleHealthRoute
   '/console/reports': typeof ConsoleReportsRouteWithChildren
   '/console/': typeof ConsoleIndexRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/console/entities': typeof ConsoleEntitiesRoute
+  '/console/gateway': typeof ConsoleGatewayRoute
   '/console/health': typeof ConsoleHealthRoute
   '/console/reports': typeof ConsoleReportsRouteWithChildren
   '/console': typeof ConsoleIndexRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
   '/console/entities': typeof ConsoleEntitiesRoute
+  '/console/gateway': typeof ConsoleGatewayRoute
   '/console/health': typeof ConsoleHealthRoute
   '/console/reports': typeof ConsoleReportsRouteWithChildren
   '/console/': typeof ConsoleIndexRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/'
     | '/console'
     | '/console/entities'
+    | '/console/gateway'
     | '/console/health'
     | '/console/reports'
     | '/console/'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/console/entities'
+    | '/console/gateway'
     | '/console/health'
     | '/console/reports'
     | '/console'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/'
     | '/console'
     | '/console/entities'
+    | '/console/gateway'
     | '/console/health'
     | '/console/reports'
     | '/console/'
@@ -187,6 +199,13 @@ declare module '@tanstack/react-router' {
       path: '/health'
       fullPath: '/console/health'
       preLoaderRoute: typeof ConsoleHealthRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/gateway': {
+      id: '/console/gateway'
+      path: '/gateway'
+      fullPath: '/console/gateway'
+      preLoaderRoute: typeof ConsoleGatewayRouteImport
       parentRoute: typeof ConsoleRoute
     }
     '/console/entities': {
@@ -241,6 +260,7 @@ const ConsoleReportsRouteWithChildren = ConsoleReportsRoute._addFileChildren(
 
 interface ConsoleRouteChildren {
   ConsoleEntitiesRoute: typeof ConsoleEntitiesRoute
+  ConsoleGatewayRoute: typeof ConsoleGatewayRoute
   ConsoleHealthRoute: typeof ConsoleHealthRoute
   ConsoleReportsRoute: typeof ConsoleReportsRouteWithChildren
   ConsoleIndexRoute: typeof ConsoleIndexRoute
@@ -251,6 +271,7 @@ interface ConsoleRouteChildren {
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleEntitiesRoute: ConsoleEntitiesRoute,
+  ConsoleGatewayRoute: ConsoleGatewayRoute,
   ConsoleHealthRoute: ConsoleHealthRoute,
   ConsoleReportsRoute: ConsoleReportsRouteWithChildren,
   ConsoleIndexRoute: ConsoleIndexRoute,
