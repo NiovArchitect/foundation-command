@@ -100,9 +100,10 @@ function EscalationsPage() {
         <tbody>
           {data?.items.map((e) => (
             <TR key={e.escalation_id} onClick={() => setSelected(e)}>
-              <TD mono className="max-w-[200px] truncate">{e.escalation_id}</TD>
-              <TD mono className="max-w-[180px] truncate">{e.source_entity_id}</TD>
-              <TD mono className="max-w-[180px] truncate">{e.target_entity_id ?? "—"}</TD>
+              <TD><CopyableId value={e.escalation_id} /></TD>
+              <TD><CopyableId value={e.source_entity_id} /></TD>
+              <TD><CopyableId value={e.target_entity_id} /></TD>
+
               <TD>{e.action_type}</TD>
               <TD>
                 <StatusPill
