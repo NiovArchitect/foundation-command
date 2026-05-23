@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DisabledAction, PageHeader, ScopeBoundaryBanner } from "@/components/console";
+import { LiveBackendConnectionPanel } from "@/components/console/LiveBackendConnectionPanel";
 
 export const Route = createFileRoute("/console/access")({
   head: () => ({ meta: [{ title: "Console Access — NIOV Foundation Console" }] }),
@@ -18,6 +19,10 @@ export const Route = createFileRoute("/console/access")({
           <DisabledAction label="Invite" />
         </div>
       </div>
+      <LiveBackendConnectionPanel />
+      <ScopeBoundaryBanner>
+        This panel is a P0 operator bridge, not a production login system.
+      </ScopeBoundaryBanner>
     </div>
   ),
 });
