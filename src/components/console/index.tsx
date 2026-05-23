@@ -125,6 +125,67 @@ export function LiveAuthRequiredState() {
   );
 }
 
+/* ---------------- LayerBadge (taxonomy chip) ---------------- */
+export type ConsoleLayer =
+  | "Control-plane"
+  | "Report-backed"
+  | "Application-side"
+  | "Future"
+  | "Preview";
+
+export function LayerBadge({ layer, className }: { layer: ConsoleLayer; className?: string }) {
+  const map: Record<ConsoleLayer, string> = {
+    "Control-plane": "bg-info/15 text-info border-info/30",
+    "Report-backed": "bg-success/15 text-success border-success/30",
+    "Application-side": "bg-accent/40 text-foreground border-border-strong",
+    Future: "bg-muted text-muted-foreground border-border-strong",
+    Preview: "bg-warning/15 text-warning border-warning/30",
+  };
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1 rounded-sm border px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider",
+        map[layer],
+        className,
+      )}
+    >
+      {layer}
+    </span>
+  );
+}
+
+/* ---------------- PageMeaningPanel ("What this page means") ---------------- */
+export function PageMeaningPanel({
+  title = "What this page means",
+  body,
+  bullets,
+  layer,
+}: {
+  title?: string;
+  body: React.ReactNode;
+  bullets?: string[];
+  layer?: ConsoleLayer;
+}) {
+  return (
+    <div className="rounded-md border border-info/30 bg-info/5 p-3">
+      <div className="mb-1 flex flex-wrap items-center gap-2">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-info">
+          {title}
+        </span>
+        {layer && <LayerBadge layer={layer} />}
+      </div>
+      <div className="text-[12px] leading-relaxed text-muted-foreground">{body}</div>
+      {bullets && bullets.length > 0 && (
+        <ul className="mt-2 flex list-disc flex-col gap-1 pl-5 text-[12px] text-muted-foreground">
+          {bullets.map((b, i) => (
+            <li key={i}>{b}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 /* ---------------- DataFreshnessIndicator ---------------- */
 export function DataFreshnessIndicator({ generatedAt }: { generatedAt?: string | null }) {
   const [, force] = React.useReducer((x) => x + 1, 0);
