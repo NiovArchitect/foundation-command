@@ -86,10 +86,10 @@ export function SecurityClassBadge({ value }: { value: ConsoleSecurityClass }) {
 /* ---------------- SourceMappingBadge ---------------- */
 export function SourceMappingBadge({ source }: { source: ConsoleDataSource }) {
   return (
-    <span className="mono inline-flex items-center gap-1 rounded-sm border border-border bg-surface px-1.5 py-0.5 text-[10px] text-muted-foreground">
+    <span className="mono inline-flex max-w-full flex-wrap items-center gap-1 break-all rounded-sm border border-border bg-surface px-1.5 py-0.5 text-[10px] text-muted-foreground">
       <span className="uppercase text-foreground/70">{source.kind}</span>
       <span>·</span>
-      <span>{source.ref}</span>
+      <span className="min-w-0 break-all">{source.ref}</span>
       {!source.existing && <span className="text-warning">· proposed</span>}
     </span>
   );
