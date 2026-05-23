@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   setConsoleBearerToken,
   clearConsoleBearerToken,
@@ -6,6 +7,11 @@ import {
 } from "@/api/consoleAuth";
 import { USE_MOCK } from "@/api/consoleConfig";
 import { CommandCenterSection, StatusPill, WarningState } from "@/components/console";
+
+/** Notify the global DataModeBanner (and any listeners) that token state changed. */
+const notifyAuthChange = () => {
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("console-auth-change"));
+};
 
 /**
  * P0 / dev-only operator bridge for placing a `can_admin_niov` Bearer token into
@@ -17,6 +23,7 @@ import { CommandCenterSection, StatusPill, WarningState } from "@/components/con
  * keeps no copy of it and never displays or imports it back.
  */
 export function LiveBackendConnectionPanel() {
+  const queryClient = useQueryClient();
   const [value, setValue] = React.useState("");
   const [tokenSet, setTokenSet] = React.useState(false);
 
@@ -26,12 +33,18 @@ export function LiveBackendConnectionPanel() {
 
   const handleSet = () => {
     setConsoleBearerToken(value);
+    // A new token must not show data fetched under the old token / mock source.
+    queryClient.removeQueries({ queryKey: ["console"] });
+    notifyAuthChange();
     setTokenSet(hasConsoleBearerToken());
     setValue(""); // never retain the raw token in component state
   };
 
   const handleClear = () => {
     clearConsoleBearerToken();
+    // Fail closed: drop all cached Console data so nothing stale stays visible.
+    queryClient.removeQueries({ queryKey: ["console"] });
+    notifyAuthChange();
     setTokenSet(false);
   };
 
@@ -53,7 +66,12 @@ export function LiveBackendConnectionPanel() {
 
         <ul className="flex list-disc flex-col gap-1 pl-5 text-[12px] text-muted-foreground">
           <li>The token is stored in memory only and clears on reload.</li>
+          <li>Changing the token clears cached Console query data.</li>
           <li>Mock mode remains the default unless VITE_CONSOLE_USE_MOCK=false is set.</li>
+          <li>
+            To run live locally, start the dev server with VITE_CONSOLE_USE_MOCK=false and
+            VITE_CONSOLE_API_BASE_URL set to the backend origin.
+          </li>
           <li>Do not use production tokens in local smoke testing.</li>
         </ul>
 

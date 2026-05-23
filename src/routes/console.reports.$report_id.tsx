@@ -62,6 +62,22 @@ function ReportDetail() {
 
   return (
     <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <nav className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+          <Link to="/console/reports" className="hover:text-foreground hover:underline">
+            Report Catalog
+          </Link>
+          <span aria-hidden>/</span>
+          <span className="text-foreground">{r.display_name}</span>
+        </nav>
+        <Link
+          to="/console/reports"
+          className="rounded-sm border border-border bg-surface px-2.5 py-1 text-[11px] font-medium text-foreground hover:bg-surface-2"
+        >
+          ← Back to Report Catalog
+        </Link>
+      </div>
+
       <PageHeader
         title={r.display_name}
         subtitle={r.purpose}
@@ -76,13 +92,22 @@ function ReportDetail() {
         }
       />
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
+        <StatusPill tone="neutral">
+          report_id: <span className="mono">{r.report_id}</span>
+        </StatusPill>
         <SecurityClassBadge value={r.security} />
         <StatusPill tone="neutral">{r.priority}</StatusPill>
         {r.mock_mode && <StatusPill tone="info">mock_mode</StatusPill>}
         {r.data_freshness_seconds !== undefined && (
           <StatusPill tone="neutral">freshness: {r.data_freshness_seconds}s</StatusPill>
         )}
+      </div>
+
+      <div className="flex flex-wrap gap-1">
+        {r.sources.map((s, i) => (
+          <SourceMappingBadge key={i} source={s} />
+        ))}
       </div>
 
       <Tabs

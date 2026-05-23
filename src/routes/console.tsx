@@ -2,7 +2,7 @@ import * as React from "react";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { SidebarNavigation } from "@/components/console/SidebarNavigation";
 import { TopBar } from "@/components/console/TopBar";
-import { MockDataBanner } from "@/components/console";
+import { DataModeBanner } from "@/components/console";
 
 export const Route = createFileRoute("/console")({
   component: ConsoleLayout,
@@ -12,7 +12,7 @@ function ConsoleLayout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   return (
     <div className="flex h-screen w-full flex-col bg-background text-foreground">
-      <MockDataBanner />
+      <DataModeBanner />
       <TopBar onMenuClick={() => setMobileOpen((v) => !v)} />
       <div className="flex min-h-0 flex-1">
         {/* Desktop sidebar */}

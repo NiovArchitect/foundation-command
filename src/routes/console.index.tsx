@@ -6,6 +6,7 @@ import {
   CriticalAttentionQueue,
   DemoGuidePanel,
   FoundationPlaneCard,
+  LiveAuthRequiredState,
   MetricCard,
   PageHeader,
   ReadinessBadge,
@@ -31,14 +32,29 @@ export const Route = createFileRoute("/console/")({
 const src = (ref: string) => ({ kind: "route" as const, ref, existing: true });
 
 function CommandCenter() {
-  const { data, isLoading } = useOverview();
+  const { data, isLoading, error } = useOverview();
   const { data: auditData } = useAudit({ take: 8 });
   const { data: reportsData } = useReports();
   const [tab, setTab] = React.useState("health");
   const [demoOpen, setDemoOpen] = React.useState(false);
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return <div className="text-xs text-muted-foreground">Loading Foundation state…</div>;
+  }
+
+  // In live mode a missing/invalid token makes the read fail closed. Surface an
+  // explicit auth-required state instead of stale data or a perpetual spinner.
+  if (error || !data) {
+    return (
+      <div className="flex flex-col gap-4">
+        <PageHeader
+          title="Foundation Command Center"
+          subtitle="Substrate-wide operational state."
+          readiness="PARTIAL"
+        />
+        <LiveAuthRequiredState />
+      </div>
+    );
   }
 
   const critical: Parameters<typeof CriticalAttentionQueue>[0]["items"] = [];

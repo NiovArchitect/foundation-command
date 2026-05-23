@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { GLOSSARY } from "@/lib/glossary";
 import { entitiesHrefForType, type ConsoleEntityType } from "@/lib/entityTypes";
+import { DataModeBanner } from "./DataModeBanner";
 import type {
   ConsoleDataSource,
   ConsoleReadinessBadge,
@@ -98,12 +99,28 @@ export function SourceMappingBadge({ source }: { source: ConsoleDataSource }) {
   );
 }
 
-/* ---------------- MockDataBanner ---------------- */
+/* ---------------- DataModeBanner / MockDataBanner ---------------- */
+// DataModeBanner is the canonical dynamic mode banner (MOCK vs LIVE). The legacy
+// MockDataBanner name now delegates to it so it can never go stale/misleading.
+export { DataModeBanner };
 export function MockDataBanner() {
+  return <DataModeBanner />;
+}
+
+/* ---------------- LiveAuthRequiredState ---------------- */
+export function LiveAuthRequiredState() {
   return (
-    <div className="border-b border-border bg-info/10 px-4 py-1.5 text-[11px] text-info">
-      <span className="font-medium">Backend contract landed;</span> frontend currently using mock
-      adapter.
+    <div className="rounded-md border border-warning/40 bg-warning/10 p-4 text-[12px] text-warning">
+      <div className="font-semibold">Live backend mode requires a can_admin_niov Bearer token.</div>
+      <div className="mt-1 text-foreground/80">
+        Go to Console Access and set a memory-only token.
+      </div>
+      <Link
+        to="/console/access"
+        className="mt-3 inline-flex rounded-sm border border-border bg-surface px-2.5 py-1 text-[11px] font-medium text-foreground hover:bg-surface-2"
+      >
+        Open Console Access →
+      </Link>
     </div>
   );
 }

@@ -20,6 +20,14 @@ export const Route = createFileRoute("/console/compliance")({
       <ScopeBoundaryBanner tone="warn">
         Export functionality is disabled in P0. The Console is read-only.
       </ScopeBoundaryBanner>
+      <div className="rounded-md border border-border bg-card p-4 text-[12px] leading-relaxed text-muted-foreground">
+        <p>In P0, compliance is surfaced through report-backed read-only exports.</p>
+        <p className="mt-2">
+          The <span className="mono">compliance_export</span> report is the current canonical
+          compliance export surface. This is a dedicated compliance entry point — not the generic
+          Report Catalog, and not a broken redirect.
+        </p>
+      </div>
       <Link to="/console/reports/$report_id" params={{ report_id: "compliance_export" }} className="self-start rounded-sm border border-border bg-surface px-3 py-1.5 text-xs text-foreground hover:bg-surface-2">
         Open Compliance Export Report →
       </Link>
