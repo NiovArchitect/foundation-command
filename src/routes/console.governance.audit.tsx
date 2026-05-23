@@ -123,13 +123,14 @@ function AuditCenter() {
                   {e.outcome}
                 </StatusPill>
               </TD>
-              <TD mono className="max-w-[200px] truncate">{e.actor_entity_id ?? "—"}</TD>
-              <TD mono className="max-w-[200px] truncate">{e.target_entity_id ?? "—"}</TD>
+              <TD><CopyableId value={e.actor_entity_id} /></TD>
+              <TD><CopyableId value={e.target_entity_id} /></TD>
               <TD mono>{e.route ?? "—"}</TD>
             </TR>
           ))}
         </tbody>
       </Table>
+
       {data && (
         <PaginationFooter
           skip={skip}
