@@ -827,13 +827,13 @@ export function FoundationPlaneCard({
       <p className="text-[12px] leading-relaxed text-muted-foreground">{description}</p>
       <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
         {links.map((l) => (
-          <Link
+          <a
             key={l.to}
-            to={l.to}
+            href={l.to}
             className="rounded-sm border border-border bg-surface px-2 py-1 text-[11px] text-foreground hover:bg-surface-2"
           >
             {l.label} →
-          </Link>
+          </a>
         ))}
       </div>
     </div>
@@ -906,12 +906,12 @@ export function DomainCard({
         <p className="text-[11px] leading-relaxed text-muted-foreground">{boundary}</p>
       )}
       <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
-        <Link
-          to={to}
+        <a
+          href={to}
           className="rounded-sm border border-border bg-surface px-2 py-1 text-[11px] text-foreground hover:bg-surface-2"
         >
           View readiness →
-        </Link>
+        </a>
         {entitiesHref && (
           <a
             href={entitiesHref}
@@ -1148,15 +1148,14 @@ export function EcosystemDomainPage({
       {tab === "reports" && (
         <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
           {reports.map((r) => (
-            <Link
+            <a
               key={r.id}
-              to="/console/reports/$report_id"
-              params={{ report_id: r.id }}
+              href={`/console/reports/${r.id}`}
               className="flex items-center justify-between gap-2 rounded-md border border-border bg-surface px-3 py-2 hover:bg-surface-2"
             >
               <span className="text-[12px] text-foreground">{r.label}</span>
               <ReadinessBadge value={r.readiness} />
-            </Link>
+            </a>
           ))}
         </div>
       )}

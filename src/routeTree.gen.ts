@@ -24,6 +24,7 @@ import { Route as ConsoleExchangeRouteImport } from './routes/console.exchange'
 import { Route as ConsoleEntitiesRouteImport } from './routes/console.entities'
 import { Route as ConsoleEmployeesRouteImport } from './routes/console.employees'
 import { Route as ConsoleEducationRouteImport } from './routes/console.education'
+import { Route as ConsoleEcosystemRouteImport } from './routes/console.ecosystem'
 import { Route as ConsoleDevicesRouteImport } from './routes/console.devices'
 import { Route as ConsoleDeveloperRouteImport } from './routes/console.developer'
 import { Route as ConsoleComplianceRouteImport } from './routes/console.compliance'
@@ -111,6 +112,11 @@ const ConsoleEducationRoute = ConsoleEducationRouteImport.update({
   path: '/education',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleEcosystemRoute = ConsoleEcosystemRouteImport.update({
+  id: '/ecosystem',
+  path: '/ecosystem',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ConsoleDevicesRoute = ConsoleDevicesRouteImport.update({
   id: '/devices',
   path: '/devices',
@@ -179,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/console/compliance': typeof ConsoleComplianceRoute
   '/console/developer': typeof ConsoleDeveloperRoute
   '/console/devices': typeof ConsoleDevicesRoute
+  '/console/ecosystem': typeof ConsoleEcosystemRoute
   '/console/education': typeof ConsoleEducationRoute
   '/console/employees': typeof ConsoleEmployeesRoute
   '/console/entities': typeof ConsoleEntitiesRoute
@@ -206,6 +213,7 @@ export interface FileRoutesByTo {
   '/console/compliance': typeof ConsoleComplianceRoute
   '/console/developer': typeof ConsoleDeveloperRoute
   '/console/devices': typeof ConsoleDevicesRoute
+  '/console/ecosystem': typeof ConsoleEcosystemRoute
   '/console/education': typeof ConsoleEducationRoute
   '/console/employees': typeof ConsoleEmployeesRoute
   '/console/entities': typeof ConsoleEntitiesRoute
@@ -235,6 +243,7 @@ export interface FileRoutesById {
   '/console/compliance': typeof ConsoleComplianceRoute
   '/console/developer': typeof ConsoleDeveloperRoute
   '/console/devices': typeof ConsoleDevicesRoute
+  '/console/ecosystem': typeof ConsoleEcosystemRoute
   '/console/education': typeof ConsoleEducationRoute
   '/console/employees': typeof ConsoleEmployeesRoute
   '/console/entities': typeof ConsoleEntitiesRoute
@@ -265,6 +274,7 @@ export interface FileRouteTypes {
     | '/console/compliance'
     | '/console/developer'
     | '/console/devices'
+    | '/console/ecosystem'
     | '/console/education'
     | '/console/employees'
     | '/console/entities'
@@ -292,6 +302,7 @@ export interface FileRouteTypes {
     | '/console/compliance'
     | '/console/developer'
     | '/console/devices'
+    | '/console/ecosystem'
     | '/console/education'
     | '/console/employees'
     | '/console/entities'
@@ -320,6 +331,7 @@ export interface FileRouteTypes {
     | '/console/compliance'
     | '/console/developer'
     | '/console/devices'
+    | '/console/ecosystem'
     | '/console/education'
     | '/console/employees'
     | '/console/entities'
@@ -451,6 +463,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleEducationRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/ecosystem': {
+      id: '/console/ecosystem'
+      path: '/ecosystem'
+      fullPath: '/console/ecosystem'
+      preLoaderRoute: typeof ConsoleEcosystemRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/console/devices': {
       id: '/console/devices'
       path: '/devices'
@@ -551,6 +570,7 @@ interface ConsoleRouteChildren {
   ConsoleComplianceRoute: typeof ConsoleComplianceRoute
   ConsoleDeveloperRoute: typeof ConsoleDeveloperRoute
   ConsoleDevicesRoute: typeof ConsoleDevicesRoute
+  ConsoleEcosystemRoute: typeof ConsoleEcosystemRoute
   ConsoleEducationRoute: typeof ConsoleEducationRoute
   ConsoleEmployeesRoute: typeof ConsoleEmployeesRoute
   ConsoleEntitiesRoute: typeof ConsoleEntitiesRoute
@@ -577,6 +597,7 @@ const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleComplianceRoute: ConsoleComplianceRoute,
   ConsoleDeveloperRoute: ConsoleDeveloperRoute,
   ConsoleDevicesRoute: ConsoleDevicesRoute,
+  ConsoleEcosystemRoute: ConsoleEcosystemRoute,
   ConsoleEducationRoute: ConsoleEducationRoute,
   ConsoleEmployeesRoute: ConsoleEmployeesRoute,
   ConsoleEntitiesRoute: ConsoleEntitiesRoute,
