@@ -13,6 +13,7 @@ import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleIndexRouteImport } from './routes/console.index'
 import { Route as ConsoleHealthRouteImport } from './routes/console.health'
+import { Route as ConsoleGovernanceAuditRouteImport } from './routes/console.governance.audit'
 
 const ConsoleRoute = ConsoleRouteImport.update({
   id: '/console',
@@ -34,17 +35,24 @@ const ConsoleHealthRoute = ConsoleHealthRouteImport.update({
   path: '/health',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleGovernanceAuditRoute = ConsoleGovernanceAuditRouteImport.update({
+  id: '/governance/audit',
+  path: '/governance/audit',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
   '/console/health': typeof ConsoleHealthRoute
   '/console/': typeof ConsoleIndexRoute
+  '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/console/health': typeof ConsoleHealthRoute
   '/console': typeof ConsoleIndexRoute
+  '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -52,13 +60,25 @@ export interface FileRoutesById {
   '/console': typeof ConsoleRouteWithChildren
   '/console/health': typeof ConsoleHealthRoute
   '/console/': typeof ConsoleIndexRoute
+  '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/console' | '/console/health' | '/console/'
+  fullPaths:
+    | '/'
+    | '/console'
+    | '/console/health'
+    | '/console/'
+    | '/console/governance/audit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/console/health' | '/console'
-  id: '__root__' | '/' | '/console' | '/console/health' | '/console/'
+  to: '/' | '/console/health' | '/console' | '/console/governance/audit'
+  id:
+    | '__root__'
+    | '/'
+    | '/console'
+    | '/console/health'
+    | '/console/'
+    | '/console/governance/audit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -96,17 +116,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleHealthRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/governance/audit': {
+      id: '/console/governance/audit'
+      path: '/governance/audit'
+      fullPath: '/console/governance/audit'
+      preLoaderRoute: typeof ConsoleGovernanceAuditRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
   }
 }
 
 interface ConsoleRouteChildren {
   ConsoleHealthRoute: typeof ConsoleHealthRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
+  ConsoleGovernanceAuditRoute: typeof ConsoleGovernanceAuditRoute
 }
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleHealthRoute: ConsoleHealthRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
+  ConsoleGovernanceAuditRoute: ConsoleGovernanceAuditRoute,
 }
 
 const ConsoleRouteWithChildren =
