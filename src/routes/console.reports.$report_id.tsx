@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useReport } from "@/hooks/useConsole";
 import {
