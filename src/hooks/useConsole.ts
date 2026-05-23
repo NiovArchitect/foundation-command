@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { mockConsoleApi } from "@/mock/mockConsoleApi";
+import { consoleApi } from "@/api/consoleApi";
 import type {
   ConsoleAuditQuery,
   ConsoleBreakGlassQuery,
@@ -8,31 +8,31 @@ import type {
 } from "@/types/console";
 
 export const useOverview = () =>
-  useQuery({ queryKey: ["console", "overview"], queryFn: () => mockConsoleApi.getOverview() });
+  useQuery({ queryKey: ["console", "overview"], queryFn: () => consoleApi.getOverview() });
 
 export const useAudit = (q: ConsoleAuditQuery = {}) =>
-  useQuery({ queryKey: ["console", "audit", q], queryFn: () => mockConsoleApi.getAudit(q) });
+  useQuery({ queryKey: ["console", "audit", q], queryFn: () => consoleApi.getAudit(q) });
 
 export const useEntities = (q: ConsoleEntityQuery = {}) =>
-  useQuery({ queryKey: ["console", "entities", q], queryFn: () => mockConsoleApi.getEntities(q) });
+  useQuery({ queryKey: ["console", "entities", q], queryFn: () => consoleApi.getEntities(q) });
 
 export const useBreakGlassGrants = (q: ConsoleBreakGlassQuery = {}) =>
   useQuery({
     queryKey: ["console", "break-glass", q],
-    queryFn: () => mockConsoleApi.getBreakGlassGrants(q),
+    queryFn: () => consoleApi.getBreakGlassGrants(q),
   });
 
 export const useEscalations = (q: ConsoleEscalationQuery = {}) =>
   useQuery({
     queryKey: ["console", "escalations", q],
-    queryFn: () => mockConsoleApi.getEscalations(q),
+    queryFn: () => consoleApi.getEscalations(q),
   });
 
 export const useReports = () =>
-  useQuery({ queryKey: ["console", "reports"], queryFn: () => mockConsoleApi.getReports() });
+  useQuery({ queryKey: ["console", "reports"], queryFn: () => consoleApi.getReports() });
 
 export const useReport = (report_id: string) =>
   useQuery({
     queryKey: ["console", "report", report_id],
-    queryFn: () => mockConsoleApi.getReportById(report_id),
+    queryFn: () => consoleApi.getReportById(report_id),
   });

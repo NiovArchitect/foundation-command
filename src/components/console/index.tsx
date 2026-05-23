@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { GLOSSARY } from "@/lib/glossary";
+import { entitiesHrefForType, type ConsoleEntityType } from "@/lib/entityTypes";
 import type {
   ConsoleDataSource,
   ConsoleReadinessBadge,
@@ -1098,16 +1099,14 @@ export function EcosystemDomainPage({
   subtitle: string;
   readiness: ConsoleReadinessBadge;
   scopeBoundary: string;
-  entityType?: string;
+  entityType?: ConsoleEntityType;
   reports: { id: string; label: string; readiness: ConsoleReadinessBadge }[];
   overview: React.ReactNode;
   boundariesExtra?: React.ReactNode;
   sourceMappingEntries: { label: string; value: string; tone?: "neutral" | "warn" }[];
 }) {
   const [tab, setTab] = React.useState("overview");
-  const entitiesHref = entityType
-    ? `/console/entities?type=${encodeURIComponent(entityType)}`
-    : "/console/entities";
+  const entitiesHref = entitiesHrefForType(entityType);
   return (
     <div className="flex flex-col gap-4">
       <PageHeader title={title} subtitle={subtitle} readiness={readiness} />

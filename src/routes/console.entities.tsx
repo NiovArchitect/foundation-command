@@ -19,6 +19,7 @@ import {
   THead,
   TR,
 } from "@/components/console";
+import { ENTITY_TYPE_FILTER_OPTIONS, REGISTRY_CATEGORIES } from "@/lib/entityTypes";
 import type { ConsoleEntityRow } from "@/types/console";
 
 export const Route = createFileRoute("/console/entities")({
@@ -28,15 +29,8 @@ export const Route = createFileRoute("/console/entities")({
 
 const PAGE = 25;
 
-const CATEGORIES: { id: string; label: string; types: string[] }[] = [
-  { id: "all", label: "All", types: [] },
-  { id: "organizations", label: "Organizations", types: ["organization"] },
-  { id: "individuals", label: "Individuals", types: ["individual"] },
-  { id: "employees", label: "Employees", types: ["employee"] },
-  { id: "education", label: "Education", types: ["student", "educator", "institution"] },
-  { id: "agents", label: "Agents", types: ["agent"] },
-  { id: "devices", label: "Devices", types: ["device"] },
-];
+// Registry tabs come from the canonical UX-label → entity_type mapping layer.
+const CATEGORIES = REGISTRY_CATEGORIES;
 
 function initialFromUrl(): { category: string; type: string } {
   if (typeof window === "undefined") return { category: "all", type: "" };
@@ -108,16 +102,7 @@ function EntitiesPage() {
             setSkip(0);
           }}
           placeholder="Entity type"
-          options={[
-            "individual",
-            "employee",
-            "organization",
-            "student",
-            "educator",
-            "agent",
-            "device",
-            "institution",
-          ]}
+          options={ENTITY_TYPE_FILTER_OPTIONS}
         />
         <SelectFilter
           value={status}

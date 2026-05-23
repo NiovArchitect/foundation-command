@@ -17,7 +17,9 @@ import type {
   ConsoleSecurityClass,
 } from "@/types/console";
 
-export const USE_MOCK = true;
+// USE_MOCK is owned by the Console config (defaults to true) and re-exported
+// here for backward compatibility with any existing imports.
+export { USE_MOCK } from "@/api/consoleConfig";
 
 const now = () => new Date().toISOString();
 const iso = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString();

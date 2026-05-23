@@ -8,7 +8,7 @@ export const Route = createFileRoute("/console/education")({
       title="Education Domain"
       subtitle="Education is a Foundation-supported domain, served through application-side surfaces."
       readiness="FUTURE"
-      entityType="student"
+      entityType="institution"
       scopeBoundary="Education is a Foundation-supported domain. Students and educators are served through application-side learning experiences, institution portals, learning wallets, classroom tools, credential capsules, and consent-governed memory experiences powered by the Foundation. They do not receive substrate-wide Foundation Console access."
       reports={[]}
       overview={
@@ -22,7 +22,15 @@ export const Route = createFileRoute("/console/education")({
         </div>
       }
       sourceMappingEntries={[
-        { label: "entities (student/educator/institution)", value: "/api/v1/console/entities" },
+        {
+          label: "entities (institution metadata)",
+          value: "/api/v1/console/entities?entity_type=institution",
+        },
+        {
+          label: "student / educator records",
+          value: "not Console-queryable — served application-side, consent-governed",
+          tone: "warn",
+        },
         { label: "education portals", value: "proposed: application-side", tone: "warn" },
       ]}
     />

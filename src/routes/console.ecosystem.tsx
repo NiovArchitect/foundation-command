@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useOverview } from "@/hooks/useConsole";
 import { DomainCard, PageHeader, ScopeBoundaryBanner } from "@/components/console";
+import { entitiesHrefForType } from "@/lib/entityTypes";
 
 export const Route = createFileRoute("/console/ecosystem")({
   head: () => ({ meta: [{ title: "Ecosystem Overview — NIOV Foundation Console" }] }),
@@ -34,7 +35,7 @@ function EcosystemOverview() {
           entityCount={byType.organization ?? 0}
           openIssues={0}
           to="/console/organizations"
-          entitiesHref="/console/entities?type=organization"
+          entitiesHref={entitiesHrefForType("organization")}
           boundary="Org users are served through scoped organization surfaces."
         />
         <DomainCard
@@ -45,8 +46,8 @@ function EcosystemOverview() {
           entityCount={(byType.student ?? 0) + (byType.educator ?? 0) + (byType.institution ?? 0)}
           openIssues={0}
           to="/console/education"
-          entitiesHref="/console/entities?type=student"
-          boundary="Served through application-side learning surfaces."
+          entitiesHref={entitiesHrefForType("institution")}
+          boundary="Served through application-side learning surfaces; Console sees institution-level metadata only."
         />
         <DomainCard
           title="Individuals"
@@ -56,7 +57,7 @@ function EcosystemOverview() {
           entityCount={byType.individual ?? 0}
           openIssues={0}
           to="/console/individuals"
-          entitiesHref="/console/entities?type=individual"
+          entitiesHref={entitiesHrefForType("individual")}
           boundary="Served through wallets and consent-governed memory experiences."
         />
         <DomainCard
@@ -67,7 +68,7 @@ function EcosystemOverview() {
           entityCount={byType.employee ?? 0}
           openIssues={0}
           to="/console/employees"
-          entitiesHref="/console/entities?type=employee"
+          entitiesHref={entitiesHrefForType("employee")}
           boundary="Served via enterprise applications, not Console."
         />
         <DomainCard
@@ -78,7 +79,7 @@ function EcosystemOverview() {
           entityCount={byType.institution ?? 0}
           openIssues={0}
           to="/console/governments"
-          entitiesHref="/console/entities?type=institution"
+          entitiesHref={entitiesHrefForType("institution")}
           boundary="Served via scoped institutional, compliance, and proof portals."
         />
         <DomainCard
@@ -89,7 +90,7 @@ function EcosystemOverview() {
           entityCount={0}
           openIssues={0}
           to="/console/developer"
-          entitiesHref="/console/entities"
+          entitiesHref={entitiesHrefForType()}
           boundary="Served through scoped developer portals, not Console."
         />
         <DomainCard
@@ -100,7 +101,7 @@ function EcosystemOverview() {
           entityCount={(byType.device ?? 0) + (byType.agent ?? 0)}
           openIssues={0}
           to="/console/devices"
-          entitiesHref="/console/entities?type=device"
+          entitiesHref={entitiesHrefForType("device")}
           boundary="Governed through wallets, scopes, and event surfaces."
         />
         <DomainCard
@@ -131,7 +132,7 @@ function EcosystemOverview() {
           entityCount={byType.agent ?? 0}
           openIssues={1}
           to="/console/agents"
-          entitiesHref="/console/entities?type=agent"
+          entitiesHref={entitiesHrefForType("agent")}
           boundary="COSMP/DBGI telemetry remains FUTURE."
         />
       </div>
