@@ -1,5 +1,7 @@
 import * as React from "react";
+import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { GLOSSARY } from "@/lib/glossary";
 import type {
   ConsoleDataSource,
   ConsoleReadinessBadge,
