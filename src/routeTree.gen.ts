@@ -9,38 +9,350 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConsoleIndexRouteImport } from './routes/console.index'
+import { Route as ConsoleSettingsRouteImport } from './routes/console.settings'
+import { Route as ConsoleReportsRouteImport } from './routes/console.reports'
+import { Route as ConsoleProofRouteImport } from './routes/console.proof'
+import { Route as ConsoleOrganizationsRouteImport } from './routes/console.organizations'
+import { Route as ConsoleIndividualsRouteImport } from './routes/console.individuals'
+import { Route as ConsoleHealthRouteImport } from './routes/console.health'
+import { Route as ConsoleGovernmentsRouteImport } from './routes/console.governments'
+import { Route as ConsoleGatewayRouteImport } from './routes/console.gateway'
+import { Route as ConsoleExchangeRouteImport } from './routes/console.exchange'
+import { Route as ConsoleEntitiesRouteImport } from './routes/console.entities'
+import { Route as ConsoleEmployeesRouteImport } from './routes/console.employees'
+import { Route as ConsoleEducationRouteImport } from './routes/console.education'
+import { Route as ConsoleDevicesRouteImport } from './routes/console.devices'
+import { Route as ConsoleDeveloperRouteImport } from './routes/console.developer'
+import { Route as ConsoleComplianceRouteImport } from './routes/console.compliance'
+import { Route as ConsoleCapsulesRouteImport } from './routes/console.capsules'
+import { Route as ConsoleCapabilitiesRouteImport } from './routes/console.capabilities'
+import { Route as ConsoleAgentsRouteImport } from './routes/console.agents'
+import { Route as ConsoleAccessRouteImport } from './routes/console.access'
+import { Route as ConsoleReportsReport_idRouteImport } from './routes/console.reports.$report_id'
+import { Route as ConsoleGovernanceEscalationsRouteImport } from './routes/console.governance.escalations'
+import { Route as ConsoleGovernanceBreakGlassRouteImport } from './routes/console.governance.break-glass'
+import { Route as ConsoleGovernanceAuditRouteImport } from './routes/console.governance.audit'
 
+const ConsoleRoute = ConsoleRouteImport.update({
+  id: '/console',
+  path: '/console',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleSettingsRoute = ConsoleSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleReportsRoute = ConsoleReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleProofRoute = ConsoleProofRouteImport.update({
+  id: '/proof',
+  path: '/proof',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleOrganizationsRoute = ConsoleOrganizationsRouteImport.update({
+  id: '/organizations',
+  path: '/organizations',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleIndividualsRoute = ConsoleIndividualsRouteImport.update({
+  id: '/individuals',
+  path: '/individuals',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleHealthRoute = ConsoleHealthRouteImport.update({
+  id: '/health',
+  path: '/health',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleGovernmentsRoute = ConsoleGovernmentsRouteImport.update({
+  id: '/governments',
+  path: '/governments',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleGatewayRoute = ConsoleGatewayRouteImport.update({
+  id: '/gateway',
+  path: '/gateway',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleExchangeRoute = ConsoleExchangeRouteImport.update({
+  id: '/exchange',
+  path: '/exchange',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleEntitiesRoute = ConsoleEntitiesRouteImport.update({
+  id: '/entities',
+  path: '/entities',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleEmployeesRoute = ConsoleEmployeesRouteImport.update({
+  id: '/employees',
+  path: '/employees',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleEducationRoute = ConsoleEducationRouteImport.update({
+  id: '/education',
+  path: '/education',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleDevicesRoute = ConsoleDevicesRouteImport.update({
+  id: '/devices',
+  path: '/devices',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleDeveloperRoute = ConsoleDeveloperRouteImport.update({
+  id: '/developer',
+  path: '/developer',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleComplianceRoute = ConsoleComplianceRouteImport.update({
+  id: '/compliance',
+  path: '/compliance',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleCapsulesRoute = ConsoleCapsulesRouteImport.update({
+  id: '/capsules',
+  path: '/capsules',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleCapabilitiesRoute = ConsoleCapabilitiesRouteImport.update({
+  id: '/capabilities',
+  path: '/capabilities',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleAgentsRoute = ConsoleAgentsRouteImport.update({
+  id: '/agents',
+  path: '/agents',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleAccessRoute = ConsoleAccessRouteImport.update({
+  id: '/access',
+  path: '/access',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleReportsReport_idRoute = ConsoleReportsReport_idRouteImport.update({
+  id: '/$report_id',
+  path: '/$report_id',
+  getParentRoute: () => ConsoleReportsRoute,
+} as any)
+const ConsoleGovernanceEscalationsRoute =
+  ConsoleGovernanceEscalationsRouteImport.update({
+    id: '/governance/escalations',
+    path: '/governance/escalations',
+    getParentRoute: () => ConsoleRoute,
+  } as any)
+const ConsoleGovernanceBreakGlassRoute =
+  ConsoleGovernanceBreakGlassRouteImport.update({
+    id: '/governance/break-glass',
+    path: '/governance/break-glass',
+    getParentRoute: () => ConsoleRoute,
+  } as any)
+const ConsoleGovernanceAuditRoute = ConsoleGovernanceAuditRouteImport.update({
+  id: '/governance/audit',
+  path: '/governance/audit',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/console': typeof ConsoleRouteWithChildren
+  '/console/access': typeof ConsoleAccessRoute
+  '/console/agents': typeof ConsoleAgentsRoute
+  '/console/capabilities': typeof ConsoleCapabilitiesRoute
+  '/console/capsules': typeof ConsoleCapsulesRoute
+  '/console/compliance': typeof ConsoleComplianceRoute
+  '/console/developer': typeof ConsoleDeveloperRoute
+  '/console/devices': typeof ConsoleDevicesRoute
+  '/console/education': typeof ConsoleEducationRoute
+  '/console/employees': typeof ConsoleEmployeesRoute
+  '/console/entities': typeof ConsoleEntitiesRoute
+  '/console/exchange': typeof ConsoleExchangeRoute
+  '/console/gateway': typeof ConsoleGatewayRoute
+  '/console/governments': typeof ConsoleGovernmentsRoute
+  '/console/health': typeof ConsoleHealthRoute
+  '/console/individuals': typeof ConsoleIndividualsRoute
+  '/console/organizations': typeof ConsoleOrganizationsRoute
+  '/console/proof': typeof ConsoleProofRoute
+  '/console/reports': typeof ConsoleReportsRouteWithChildren
+  '/console/settings': typeof ConsoleSettingsRoute
+  '/console/': typeof ConsoleIndexRoute
+  '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
+  '/console/governance/break-glass': typeof ConsoleGovernanceBreakGlassRoute
+  '/console/governance/escalations': typeof ConsoleGovernanceEscalationsRoute
+  '/console/reports/$report_id': typeof ConsoleReportsReport_idRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/console/access': typeof ConsoleAccessRoute
+  '/console/agents': typeof ConsoleAgentsRoute
+  '/console/capabilities': typeof ConsoleCapabilitiesRoute
+  '/console/capsules': typeof ConsoleCapsulesRoute
+  '/console/compliance': typeof ConsoleComplianceRoute
+  '/console/developer': typeof ConsoleDeveloperRoute
+  '/console/devices': typeof ConsoleDevicesRoute
+  '/console/education': typeof ConsoleEducationRoute
+  '/console/employees': typeof ConsoleEmployeesRoute
+  '/console/entities': typeof ConsoleEntitiesRoute
+  '/console/exchange': typeof ConsoleExchangeRoute
+  '/console/gateway': typeof ConsoleGatewayRoute
+  '/console/governments': typeof ConsoleGovernmentsRoute
+  '/console/health': typeof ConsoleHealthRoute
+  '/console/individuals': typeof ConsoleIndividualsRoute
+  '/console/organizations': typeof ConsoleOrganizationsRoute
+  '/console/proof': typeof ConsoleProofRoute
+  '/console/reports': typeof ConsoleReportsRouteWithChildren
+  '/console/settings': typeof ConsoleSettingsRoute
+  '/console': typeof ConsoleIndexRoute
+  '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
+  '/console/governance/break-glass': typeof ConsoleGovernanceBreakGlassRoute
+  '/console/governance/escalations': typeof ConsoleGovernanceEscalationsRoute
+  '/console/reports/$report_id': typeof ConsoleReportsReport_idRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/console': typeof ConsoleRouteWithChildren
+  '/console/access': typeof ConsoleAccessRoute
+  '/console/agents': typeof ConsoleAgentsRoute
+  '/console/capabilities': typeof ConsoleCapabilitiesRoute
+  '/console/capsules': typeof ConsoleCapsulesRoute
+  '/console/compliance': typeof ConsoleComplianceRoute
+  '/console/developer': typeof ConsoleDeveloperRoute
+  '/console/devices': typeof ConsoleDevicesRoute
+  '/console/education': typeof ConsoleEducationRoute
+  '/console/employees': typeof ConsoleEmployeesRoute
+  '/console/entities': typeof ConsoleEntitiesRoute
+  '/console/exchange': typeof ConsoleExchangeRoute
+  '/console/gateway': typeof ConsoleGatewayRoute
+  '/console/governments': typeof ConsoleGovernmentsRoute
+  '/console/health': typeof ConsoleHealthRoute
+  '/console/individuals': typeof ConsoleIndividualsRoute
+  '/console/organizations': typeof ConsoleOrganizationsRoute
+  '/console/proof': typeof ConsoleProofRoute
+  '/console/reports': typeof ConsoleReportsRouteWithChildren
+  '/console/settings': typeof ConsoleSettingsRoute
+  '/console/': typeof ConsoleIndexRoute
+  '/console/governance/audit': typeof ConsoleGovernanceAuditRoute
+  '/console/governance/break-glass': typeof ConsoleGovernanceBreakGlassRoute
+  '/console/governance/escalations': typeof ConsoleGovernanceEscalationsRoute
+  '/console/reports/$report_id': typeof ConsoleReportsReport_idRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/console'
+    | '/console/access'
+    | '/console/agents'
+    | '/console/capabilities'
+    | '/console/capsules'
+    | '/console/compliance'
+    | '/console/developer'
+    | '/console/devices'
+    | '/console/education'
+    | '/console/employees'
+    | '/console/entities'
+    | '/console/exchange'
+    | '/console/gateway'
+    | '/console/governments'
+    | '/console/health'
+    | '/console/individuals'
+    | '/console/organizations'
+    | '/console/proof'
+    | '/console/reports'
+    | '/console/settings'
+    | '/console/'
+    | '/console/governance/audit'
+    | '/console/governance/break-glass'
+    | '/console/governance/escalations'
+    | '/console/reports/$report_id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/console/access'
+    | '/console/agents'
+    | '/console/capabilities'
+    | '/console/capsules'
+    | '/console/compliance'
+    | '/console/developer'
+    | '/console/devices'
+    | '/console/education'
+    | '/console/employees'
+    | '/console/entities'
+    | '/console/exchange'
+    | '/console/gateway'
+    | '/console/governments'
+    | '/console/health'
+    | '/console/individuals'
+    | '/console/organizations'
+    | '/console/proof'
+    | '/console/reports'
+    | '/console/settings'
+    | '/console'
+    | '/console/governance/audit'
+    | '/console/governance/break-glass'
+    | '/console/governance/escalations'
+    | '/console/reports/$report_id'
+  id:
+    | '__root__'
+    | '/'
+    | '/console'
+    | '/console/access'
+    | '/console/agents'
+    | '/console/capabilities'
+    | '/console/capsules'
+    | '/console/compliance'
+    | '/console/developer'
+    | '/console/devices'
+    | '/console/education'
+    | '/console/employees'
+    | '/console/entities'
+    | '/console/exchange'
+    | '/console/gateway'
+    | '/console/governments'
+    | '/console/health'
+    | '/console/individuals'
+    | '/console/organizations'
+    | '/console/proof'
+    | '/console/reports'
+    | '/console/settings'
+    | '/console/'
+    | '/console/governance/audit'
+    | '/console/governance/break-glass'
+    | '/console/governance/escalations'
+    | '/console/reports/$report_id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConsoleRoute: typeof ConsoleRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/console': {
+      id: '/console'
+      path: '/console'
+      fullPath: '/console'
+      preLoaderRoute: typeof ConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +360,248 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/console/': {
+      id: '/console/'
+      path: '/'
+      fullPath: '/console/'
+      preLoaderRoute: typeof ConsoleIndexRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/settings': {
+      id: '/console/settings'
+      path: '/settings'
+      fullPath: '/console/settings'
+      preLoaderRoute: typeof ConsoleSettingsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/reports': {
+      id: '/console/reports'
+      path: '/reports'
+      fullPath: '/console/reports'
+      preLoaderRoute: typeof ConsoleReportsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/proof': {
+      id: '/console/proof'
+      path: '/proof'
+      fullPath: '/console/proof'
+      preLoaderRoute: typeof ConsoleProofRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/organizations': {
+      id: '/console/organizations'
+      path: '/organizations'
+      fullPath: '/console/organizations'
+      preLoaderRoute: typeof ConsoleOrganizationsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/individuals': {
+      id: '/console/individuals'
+      path: '/individuals'
+      fullPath: '/console/individuals'
+      preLoaderRoute: typeof ConsoleIndividualsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/health': {
+      id: '/console/health'
+      path: '/health'
+      fullPath: '/console/health'
+      preLoaderRoute: typeof ConsoleHealthRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/governments': {
+      id: '/console/governments'
+      path: '/governments'
+      fullPath: '/console/governments'
+      preLoaderRoute: typeof ConsoleGovernmentsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/gateway': {
+      id: '/console/gateway'
+      path: '/gateway'
+      fullPath: '/console/gateway'
+      preLoaderRoute: typeof ConsoleGatewayRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/exchange': {
+      id: '/console/exchange'
+      path: '/exchange'
+      fullPath: '/console/exchange'
+      preLoaderRoute: typeof ConsoleExchangeRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/entities': {
+      id: '/console/entities'
+      path: '/entities'
+      fullPath: '/console/entities'
+      preLoaderRoute: typeof ConsoleEntitiesRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/employees': {
+      id: '/console/employees'
+      path: '/employees'
+      fullPath: '/console/employees'
+      preLoaderRoute: typeof ConsoleEmployeesRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/education': {
+      id: '/console/education'
+      path: '/education'
+      fullPath: '/console/education'
+      preLoaderRoute: typeof ConsoleEducationRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/devices': {
+      id: '/console/devices'
+      path: '/devices'
+      fullPath: '/console/devices'
+      preLoaderRoute: typeof ConsoleDevicesRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/developer': {
+      id: '/console/developer'
+      path: '/developer'
+      fullPath: '/console/developer'
+      preLoaderRoute: typeof ConsoleDeveloperRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/compliance': {
+      id: '/console/compliance'
+      path: '/compliance'
+      fullPath: '/console/compliance'
+      preLoaderRoute: typeof ConsoleComplianceRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/capsules': {
+      id: '/console/capsules'
+      path: '/capsules'
+      fullPath: '/console/capsules'
+      preLoaderRoute: typeof ConsoleCapsulesRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/capabilities': {
+      id: '/console/capabilities'
+      path: '/capabilities'
+      fullPath: '/console/capabilities'
+      preLoaderRoute: typeof ConsoleCapabilitiesRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/agents': {
+      id: '/console/agents'
+      path: '/agents'
+      fullPath: '/console/agents'
+      preLoaderRoute: typeof ConsoleAgentsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/access': {
+      id: '/console/access'
+      path: '/access'
+      fullPath: '/console/access'
+      preLoaderRoute: typeof ConsoleAccessRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/reports/$report_id': {
+      id: '/console/reports/$report_id'
+      path: '/$report_id'
+      fullPath: '/console/reports/$report_id'
+      preLoaderRoute: typeof ConsoleReportsReport_idRouteImport
+      parentRoute: typeof ConsoleReportsRoute
+    }
+    '/console/governance/escalations': {
+      id: '/console/governance/escalations'
+      path: '/governance/escalations'
+      fullPath: '/console/governance/escalations'
+      preLoaderRoute: typeof ConsoleGovernanceEscalationsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/governance/break-glass': {
+      id: '/console/governance/break-glass'
+      path: '/governance/break-glass'
+      fullPath: '/console/governance/break-glass'
+      preLoaderRoute: typeof ConsoleGovernanceBreakGlassRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/governance/audit': {
+      id: '/console/governance/audit'
+      path: '/governance/audit'
+      fullPath: '/console/governance/audit'
+      preLoaderRoute: typeof ConsoleGovernanceAuditRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
   }
 }
 
+interface ConsoleReportsRouteChildren {
+  ConsoleReportsReport_idRoute: typeof ConsoleReportsReport_idRoute
+}
+
+const ConsoleReportsRouteChildren: ConsoleReportsRouteChildren = {
+  ConsoleReportsReport_idRoute: ConsoleReportsReport_idRoute,
+}
+
+const ConsoleReportsRouteWithChildren = ConsoleReportsRoute._addFileChildren(
+  ConsoleReportsRouteChildren,
+)
+
+interface ConsoleRouteChildren {
+  ConsoleAccessRoute: typeof ConsoleAccessRoute
+  ConsoleAgentsRoute: typeof ConsoleAgentsRoute
+  ConsoleCapabilitiesRoute: typeof ConsoleCapabilitiesRoute
+  ConsoleCapsulesRoute: typeof ConsoleCapsulesRoute
+  ConsoleComplianceRoute: typeof ConsoleComplianceRoute
+  ConsoleDeveloperRoute: typeof ConsoleDeveloperRoute
+  ConsoleDevicesRoute: typeof ConsoleDevicesRoute
+  ConsoleEducationRoute: typeof ConsoleEducationRoute
+  ConsoleEmployeesRoute: typeof ConsoleEmployeesRoute
+  ConsoleEntitiesRoute: typeof ConsoleEntitiesRoute
+  ConsoleExchangeRoute: typeof ConsoleExchangeRoute
+  ConsoleGatewayRoute: typeof ConsoleGatewayRoute
+  ConsoleGovernmentsRoute: typeof ConsoleGovernmentsRoute
+  ConsoleHealthRoute: typeof ConsoleHealthRoute
+  ConsoleIndividualsRoute: typeof ConsoleIndividualsRoute
+  ConsoleOrganizationsRoute: typeof ConsoleOrganizationsRoute
+  ConsoleProofRoute: typeof ConsoleProofRoute
+  ConsoleReportsRoute: typeof ConsoleReportsRouteWithChildren
+  ConsoleSettingsRoute: typeof ConsoleSettingsRoute
+  ConsoleIndexRoute: typeof ConsoleIndexRoute
+  ConsoleGovernanceAuditRoute: typeof ConsoleGovernanceAuditRoute
+  ConsoleGovernanceBreakGlassRoute: typeof ConsoleGovernanceBreakGlassRoute
+  ConsoleGovernanceEscalationsRoute: typeof ConsoleGovernanceEscalationsRoute
+}
+
+const ConsoleRouteChildren: ConsoleRouteChildren = {
+  ConsoleAccessRoute: ConsoleAccessRoute,
+  ConsoleAgentsRoute: ConsoleAgentsRoute,
+  ConsoleCapabilitiesRoute: ConsoleCapabilitiesRoute,
+  ConsoleCapsulesRoute: ConsoleCapsulesRoute,
+  ConsoleComplianceRoute: ConsoleComplianceRoute,
+  ConsoleDeveloperRoute: ConsoleDeveloperRoute,
+  ConsoleDevicesRoute: ConsoleDevicesRoute,
+  ConsoleEducationRoute: ConsoleEducationRoute,
+  ConsoleEmployeesRoute: ConsoleEmployeesRoute,
+  ConsoleEntitiesRoute: ConsoleEntitiesRoute,
+  ConsoleExchangeRoute: ConsoleExchangeRoute,
+  ConsoleGatewayRoute: ConsoleGatewayRoute,
+  ConsoleGovernmentsRoute: ConsoleGovernmentsRoute,
+  ConsoleHealthRoute: ConsoleHealthRoute,
+  ConsoleIndividualsRoute: ConsoleIndividualsRoute,
+  ConsoleOrganizationsRoute: ConsoleOrganizationsRoute,
+  ConsoleProofRoute: ConsoleProofRoute,
+  ConsoleReportsRoute: ConsoleReportsRouteWithChildren,
+  ConsoleSettingsRoute: ConsoleSettingsRoute,
+  ConsoleIndexRoute: ConsoleIndexRoute,
+  ConsoleGovernanceAuditRoute: ConsoleGovernanceAuditRoute,
+  ConsoleGovernanceBreakGlassRoute: ConsoleGovernanceBreakGlassRoute,
+  ConsoleGovernanceEscalationsRoute: ConsoleGovernanceEscalationsRoute,
+}
+
+const ConsoleRouteWithChildren =
+  ConsoleRoute._addFileChildren(ConsoleRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConsoleRoute: ConsoleRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
