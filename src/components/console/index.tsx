@@ -182,18 +182,18 @@ export function CommandCenterSection({
   banner?: React.ReactNode;
 }) {
   return (
-    <section className="rounded-md border border-border bg-surface">
-      <header className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
-        <div>
-          <h2 className="text-sm font-semibold text-foreground">{title}</h2>
+    <section className="overflow-hidden rounded-md border border-border bg-surface">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3">
+        <div className="min-w-0">
+          <h2 className="break-words text-sm font-semibold text-foreground">{title}</h2>
           {description && (
-            <p className="mt-0.5 text-[11px] text-muted-foreground">{description}</p>
+            <p className="mt-0.5 break-words text-[11px] text-muted-foreground">{description}</p>
           )}
         </div>
-        {readiness && <ReadinessBadge value={readiness} />}
+        {readiness && <ReadinessBadge className="shrink-0" value={readiness} />}
       </header>
       {banner}
-      <div className="p-4">{children}</div>
+      <div className="min-w-0 p-4">{children}</div>
     </section>
   );
 }
