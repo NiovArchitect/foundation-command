@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsoleIndexRouteImport } from './routes/console.index'
+import { Route as ConsoleHealthRouteImport } from './routes/console.health'
 
 const ConsoleRoute = ConsoleRouteImport.update({
   id: '/console',
@@ -28,28 +29,36 @@ const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleHealthRoute = ConsoleHealthRouteImport.update({
+  id: '/health',
+  path: '/health',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
+  '/console/health': typeof ConsoleHealthRoute
   '/console/': typeof ConsoleIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/console/health': typeof ConsoleHealthRoute
   '/console': typeof ConsoleIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
+  '/console/health': typeof ConsoleHealthRoute
   '/console/': typeof ConsoleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/console' | '/console/'
+  fullPaths: '/' | '/console' | '/console/health' | '/console/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/console'
-  id: '__root__' | '/' | '/console' | '/console/'
+  to: '/' | '/console/health' | '/console'
+  id: '__root__' | '/' | '/console' | '/console/health' | '/console/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -80,14 +89,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleIndexRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/health': {
+      id: '/console/health'
+      path: '/health'
+      fullPath: '/console/health'
+      preLoaderRoute: typeof ConsoleHealthRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
   }
 }
 
 interface ConsoleRouteChildren {
+  ConsoleHealthRoute: typeof ConsoleHealthRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
 }
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
+  ConsoleHealthRoute: ConsoleHealthRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
 }
 
