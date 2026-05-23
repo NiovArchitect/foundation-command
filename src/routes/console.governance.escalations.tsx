@@ -2,6 +2,7 @@ import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEscalations } from "@/hooks/useConsole";
 import {
+  CopyableId,
   DetailDrawer,
   DisabledAction,
   FilterBar,
@@ -9,6 +10,7 @@ import {
   PaginationFooter,
   SelectFilter,
   StatusPill,
+  Tabs,
   Table,
   TD,
   TH,
@@ -25,11 +27,20 @@ export const Route = createFileRoute("/console/governance/escalations")({
 
 const PAGE = 25;
 
+const STATUS_TABS = [
+  { id: "all", label: "All", status: "" },
+  { id: "pending", label: "Pending", status: "pending" },
+  { id: "approved", label: "Approved", status: "approved" },
+  { id: "rejected", label: "Rejected", status: "rejected" },
+  { id: "expired", label: "Expired", status: "expired" },
+];
+
 function EscalationsPage() {
   const [skip, setSkip] = React.useState(0);
-  const [status, setStatus] = React.useState("");
+  const [statusTab, setStatusTab] = React.useState("all");
   const [actionType, setActionType] = React.useState("");
   const [selected, setSelected] = React.useState<ConsoleEscalationRow | null>(null);
+  const status = STATUS_TABS.find((t) => t.id === statusTab)?.status ?? "";
   const { data } = useEscalations({
     skip,
     take: PAGE,
@@ -51,16 +62,15 @@ function EscalationsPage() {
           </div>
         }
       />
+      <Tabs
+        tabs={STATUS_TABS.map((t) => ({ id: t.id, label: t.label }))}
+        active={statusTab}
+        onChange={(id) => {
+          setStatusTab(id);
+          setSkip(0);
+        }}
+      />
       <FilterBar>
-        <SelectFilter
-          value={status}
-          onChange={(v) => {
-            setStatus(v);
-            setSkip(0);
-          }}
-          placeholder="Status"
-          options={["pending", "approved", "rejected", "expired"]}
-        />
         <SelectFilter
           value={actionType}
           onChange={(v) => {
@@ -70,7 +80,11 @@ function EscalationsPage() {
           placeholder="Action type"
           options={["WRITE_CAPSULE", "SHARE_CAPSULE", "GRANT_ROLE", "REVOKE_ROLE"]}
         />
+        <div className="ml-auto text-[11px] text-muted-foreground">
+          {data?.total ?? 0} matching escalation(s)
+        </div>
       </FilterBar>
+
       <Table>
         <THead>
           <TR>
@@ -86,9 +100,10 @@ function EscalationsPage() {
         <tbody>
           {data?.items.map((e) => (
             <TR key={e.escalation_id} onClick={() => setSelected(e)}>
-              <TD mono className="max-w-[200px] truncate">{e.escalation_id}</TD>
-              <TD mono className="max-w-[180px] truncate">{e.source_entity_id}</TD>
-              <TD mono className="max-w-[180px] truncate">{e.target_entity_id ?? "—"}</TD>
+              <TD><CopyableId value={e.escalation_id} /></TD>
+              <TD><CopyableId value={e.source_entity_id} /></TD>
+              <TD><CopyableId value={e.target_entity_id} /></TD>
+
               <TD>{e.action_type}</TD>
               <TD>
                 <StatusPill

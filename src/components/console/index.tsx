@@ -268,7 +268,7 @@ export function PageHeader({
   generatedAt,
   right,
 }: {
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
   readiness?: ConsoleReadinessBadge;
   generatedAt?: string | null;

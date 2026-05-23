@@ -2,12 +2,15 @@ import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useAudit } from "@/hooks/useConsole";
 import {
+  CopyableId,
   DetailDrawer,
   FilterBar,
   PaginationFooter,
   PageHeader,
+  ScrollBox,
   SearchInput,
   SelectFilter,
+  Tabs,
   Table,
   TD,
   TH,
@@ -24,12 +27,21 @@ export const Route = createFileRoute("/console/governance/audit")({
 
 const PAGE = 25;
 
+const OUTCOME_TABS = [
+  { id: "all", label: "All", outcome: "" },
+  { id: "success", label: "Success", outcome: "success" },
+  { id: "denied", label: "Denied", outcome: "denied" },
+  { id: "error", label: "Error", outcome: "error" },
+];
+
 function AuditCenter() {
   const [skip, setSkip] = React.useState(0);
   const [eventType, setEventType] = React.useState("");
-  const [outcome, setOutcome] = React.useState("");
+  const [outcomeTab, setOutcomeTab] = React.useState("all");
   const [actor, setActor] = React.useState("");
   const [selected, setSelected] = React.useState<ConsoleAuditEvent | null>(null);
+
+  const outcome = OUTCOME_TABS.find((t) => t.id === outcomeTab)?.outcome ?? "";
 
   const { data } = useAudit({
     skip,
@@ -46,6 +58,14 @@ function AuditCenter() {
         subtitle="Audited events across substrate. Chain-hash integrity preserved per row."
         readiness="LIVE"
         generatedAt={data?.generated_at}
+      />
+      <Tabs
+        tabs={OUTCOME_TABS.map((t) => ({ id: t.id, label: t.label }))}
+        active={outcomeTab}
+        onChange={(id) => {
+          setOutcomeTab(id);
+          setSkip(0);
+        }}
       />
       <FilterBar>
         <SelectFilter
@@ -72,17 +92,13 @@ function AuditCenter() {
             "REGULATOR_ACCESS",
           ]}
         />
-        <SelectFilter
-          value={outcome}
-          onChange={(v) => {
-            setOutcome(v);
-            setSkip(0);
-          }}
-          placeholder="Outcome"
-          options={["success", "denied", "error"]}
-        />
         <SearchInput value={actor} onChange={setActor} placeholder="Actor entity id" />
+        <div className="ml-auto text-[11px] text-muted-foreground">
+          {data?.total ?? 0} matching event(s)
+        </div>
       </FilterBar>
+
+
 
       <Table>
         <THead>
@@ -107,13 +123,14 @@ function AuditCenter() {
                   {e.outcome}
                 </StatusPill>
               </TD>
-              <TD mono className="max-w-[200px] truncate">{e.actor_entity_id ?? "—"}</TD>
-              <TD mono className="max-w-[200px] truncate">{e.target_entity_id ?? "—"}</TD>
+              <TD><CopyableId value={e.actor_entity_id} /></TD>
+              <TD><CopyableId value={e.target_entity_id} /></TD>
               <TD mono>{e.route ?? "—"}</TD>
             </TR>
           ))}
         </tbody>
       </Table>
+
       {data && (
         <PaginationFooter
           skip={skip}
@@ -143,10 +160,11 @@ function AuditCenter() {
             <KV k="chain_hash" v={<span className="mono break-all">{selected.chain_hash}</span>} />
             <div>
               <div className="text-[10px] uppercase tracking-wider text-muted-foreground">details</div>
-              <pre className="mono mt-1 max-h-64 overflow-auto rounded-sm border border-border bg-surface-2 p-2 text-[11px]">
+              <ScrollBox copyValue={JSON.stringify(selected.details, null, 2)} maxHeight={240}>
                 {JSON.stringify(selected.details, null, 2)}
-              </pre>
+              </ScrollBox>
             </div>
+
           </div>
         )}
       </DetailDrawer>
