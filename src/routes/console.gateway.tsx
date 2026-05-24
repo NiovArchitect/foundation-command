@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useOverview } from "@/hooks/useConsole";
 import {
+  ConsoleBreadcrumbs,
   MetricCard,
   PageHeader,
+  PageMeaningPanel,
   ScopeBoundaryBanner,
 } from "@/components/console";
 
@@ -16,11 +18,26 @@ function GatewayPage() {
   const g = data?.gateway;
   return (
     <div className="flex flex-col gap-5">
+      <ConsoleBreadcrumbs
+        items={[
+          { label: "Console", to: "/console" },
+          { label: "Integrations" },
+          { label: "API Gateway" },
+        ]}
+      />
       <PageHeader
         title="Gateway Usage Monitor"
         subtitle="Operation-class posture across substrate gateway."
         readiness={g?.readiness ?? "PARTIAL"}
         generatedAt={data?.generated_at}
+      />
+      <PageMeaningPanel
+        layer="Control-plane"
+        body="Integration and gateway posture across the substrate."
+        bullets={[
+          "Live gateway counters are not available in P0 (live_counters_available: false).",
+          "Operation-class posture only.",
+        ]}
       />
       <ScopeBoundaryBanner tone="warn">
         live_counters_available: false — live gateway counters are not available in P0.
@@ -38,7 +55,11 @@ function GatewayPage() {
             label="Live Counters Available"
             value="false"
             readiness="PARTIAL"
-            source={{ kind: "route", ref: "overview.gateway.live_counters_available", existing: true }}
+            source={{
+              kind: "route",
+              ref: "overview.gateway.live_counters_available",
+              existing: true,
+            }}
           />
           <MetricCard
             label="Recent Anomalies"

@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { GLOSSARY } from "@/lib/glossary";
 import { entitiesHrefForType, type ConsoleEntityType } from "@/lib/entityTypes";
+import { ECOSYSTEM_DOMAIN_COPY } from "@/lib/ecosystemDomainCopy";
 import { DataModeBanner } from "./DataModeBanner";
 import type {
   ConsoleDataSource,
@@ -11,7 +12,13 @@ import type {
 } from "@/types/console";
 
 /* ---------------- ReadinessBadge ---------------- */
-export function ReadinessBadge({ value, className }: { value: ConsoleReadinessBadge; className?: string }) {
+export function ReadinessBadge({
+  value,
+  className,
+}: {
+  value: ConsoleReadinessBadge;
+  className?: string;
+}) {
   const map: Record<ConsoleReadinessBadge, string> = {
     LIVE: "bg-success/15 text-success border-success/30",
     PARTIAL: "bg-warning/15 text-warning border-warning/30",
@@ -67,9 +74,7 @@ export function RiskBadge({ level }: { level: "low" | "med" | "high" | "critical
   const tone =
     level === "low" ? "ok" : level === "med" ? "warn" : level === "high" ? "danger" : "danger";
   return (
-    <StatusPill tone={tone as "ok" | "warn" | "danger"}>
-      Risk: {level.toUpperCase()}
-    </StatusPill>
+    <StatusPill tone={tone as "ok" | "warn" | "danger"}>Risk: {level.toUpperCase()}</StatusPill>
   );
 }
 
@@ -183,6 +188,29 @@ export function PageMeaningPanel({
         </ul>
       )}
     </div>
+  );
+}
+
+/* ---------------- ConsoleBreadcrumbs ---------------- */
+export function ConsoleBreadcrumbs({ items }: { items: Array<{ label: string; to?: string }> }) {
+  return (
+    <nav className="flex flex-wrap items-center gap-1.5 text-[11px] text-muted-foreground">
+      {items.map((it, i) => {
+        const isLast = i === items.length - 1;
+        return (
+          <React.Fragment key={i}>
+            {i > 0 && <span aria-hidden>/</span>}
+            {it.to && !isLast ? (
+              <a href={it.to} className="hover:text-foreground hover:underline">
+                {it.label}
+              </a>
+            ) : (
+              <span className={isLast ? "text-foreground" : undefined}>{it.label}</span>
+            )}
+          </React.Fragment>
+        );
+      })}
+    </nav>
   );
 }
 
@@ -316,13 +344,7 @@ export function ScopeBoundaryBanner({
 }
 
 /* ---------------- DisabledAction ---------------- */
-export function DisabledAction({
-  label,
-  className,
-}: {
-  label: string;
-  className?: string;
-}) {
+export function DisabledAction({ label, className }: { label: string; className?: string }) {
   return (
     <button
       type="button"
@@ -360,9 +382,7 @@ export function PageHeader({
           <h1 className="text-lg font-semibold tracking-tight text-foreground">{title}</h1>
           {readiness && <ReadinessBadge value={readiness} />}
         </div>
-        {subtitle && (
-          <p className="mt-1 max-w-3xl text-[12px] text-muted-foreground">{subtitle}</p>
-        )}
+        {subtitle && <p className="mt-1 max-w-3xl text-[12px] text-muted-foreground">{subtitle}</p>}
       </div>
       <div className="flex items-center gap-3">
         {generatedAt !== undefined && <DataFreshnessIndicator generatedAt={generatedAt} />}
@@ -971,19 +991,12 @@ export function DomainCard({
           <div className="text-[10px] uppercase tracking-wider text-muted-foreground">
             Open issues
           </div>
-          <div
-            className={cn(
-              "mono",
-              (openIssues ?? 0) > 0 ? "text-warning" : "text-foreground",
-            )}
-          >
+          <div className={cn("mono", (openIssues ?? 0) > 0 ? "text-warning" : "text-foreground")}>
             {openIssues ?? 0}
           </div>
         </div>
       </div>
-      {boundary && (
-        <p className="text-[11px] leading-relaxed text-muted-foreground">{boundary}</p>
-      )}
+      {boundary && <p className="text-[11px] leading-relaxed text-muted-foreground">{boundary}</p>}
       <div className="mt-auto flex flex-wrap gap-1.5 pt-2">
         <a
           href={to}
@@ -1172,6 +1185,9 @@ export function EcosystemDomainPage({
   overview,
   boundariesExtra,
   sourceMappingEntries,
+  domainId,
+  breadcrumbGroup,
+  meaning,
 }: {
   title: string;
   subtitle: string;
@@ -1182,11 +1198,33 @@ export function EcosystemDomainPage({
   overview: React.ReactNode;
   boundariesExtra?: React.ReactNode;
   sourceMappingEntries: { label: string; value: string; tone?: "neutral" | "warn" }[];
+  domainId?: string;
+  breadcrumbGroup?: string;
+  meaning?: { layer: ConsoleLayer; body: React.ReactNode; bullets?: string[] };
 }) {
   const [tab, setTab] = React.useState("overview");
   const entitiesHref = entitiesHrefForType(entityType);
+  const copy = domainId ? ECOSYSTEM_DOMAIN_COPY[domainId] : undefined;
+  const group = breadcrumbGroup ?? "Entities & Ecosystem";
+  const meaningPanel =
+    meaning ??
+    (copy
+      ? {
+          layer: copy.layer,
+          body: copy.whatItIs as React.ReactNode,
+          bullets: [
+            copy.whyItMatters,
+            copy.foundationRelation,
+            copy.otzarRelation,
+            copy.actorExamples,
+          ],
+        }
+      : undefined);
   return (
     <div className="flex flex-col gap-4">
+      <ConsoleBreadcrumbs
+        items={[{ label: "Console", to: "/console" }, { label: group }, { label: title }]}
+      />
       <PageHeader title={title} subtitle={subtitle} readiness={readiness} />
       <div className="flex flex-wrap gap-1.5">
         <StatusPill tone="neutral">
@@ -1195,6 +1233,13 @@ export function EcosystemDomainPage({
         <StatusPill tone="info">Mock Adapter</StatusPill>
         <StatusPill tone="neutral">Writes: Disabled</StatusPill>
       </div>
+      {meaningPanel && (
+        <PageMeaningPanel
+          layer={meaningPanel.layer}
+          body={meaningPanel.body}
+          bullets={meaningPanel.bullets}
+        />
+      )}
       <Tabs
         tabs={[
           { id: "overview", label: "Overview" },
@@ -1217,32 +1262,34 @@ export function EcosystemDomainPage({
             href={entitiesHref}
             className="self-start rounded-sm border border-border bg-surface-2 px-3 py-1.5 text-xs text-foreground hover:bg-accent/40"
           >
-            View entities filtered by{" "}
-            <span className="mono">{entityType ?? "this domain"}</span> →
+            View entities filtered by <span className="mono">{entityType ?? "this domain"}</span> →
           </a>
         </div>
       )}
-      {tab === "reports" && (
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-          {reports.map((r) => (
-            <a
-              key={r.id}
-              href={`/console/reports/${r.id}`}
-              className="flex items-center justify-between gap-2 rounded-md border border-border bg-surface px-3 py-2 hover:bg-surface-2"
-            >
-              <span className="text-[12px] text-foreground">{r.label}</span>
-              <ReadinessBadge value={r.readiness} />
-            </a>
-          ))}
-        </div>
-      )}
+      {tab === "reports" &&
+        (reports.length === 0 ? (
+          <EmptyState message="No domain-specific reports yet — see the Report Catalog." />
+        ) : (
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+            {reports.map((r) => (
+              <a
+                key={r.id}
+                href={`/console/reports/${r.id}`}
+                className="flex items-center justify-between gap-2 rounded-md border border-border bg-surface px-3 py-2 hover:bg-surface-2"
+              >
+                <span className="text-[12px] text-foreground">{r.label}</span>
+                <ReadinessBadge value={r.readiness} />
+              </a>
+            ))}
+          </div>
+        ))}
       {tab === "boundaries" && (
         <div className="flex flex-col gap-3">
           <ScopeBoundaryBanner>{scopeBoundary}</ScopeBoundaryBanner>
           {boundariesExtra}
           <div className="rounded-md border border-border bg-surface p-3 text-[12px] text-muted-foreground">
-            End users in this domain receive application-side, portal-side, or scoped experiences
-            — not substrate-wide Console access. Substrate-wide Console access requires{" "}
+            End users in this domain receive application-side, portal-side, or scoped experiences —
+            not substrate-wide Console access. Substrate-wide Console access requires{" "}
             <span className="mono">can_admin_niov</span>.
           </div>
         </div>
@@ -1251,4 +1298,3 @@ export function EcosystemDomainPage({
     </div>
   );
 }
-

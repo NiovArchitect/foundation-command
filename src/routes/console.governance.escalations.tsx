@@ -2,11 +2,13 @@ import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEscalations } from "@/hooks/useConsole";
 import {
+  ConsoleBreadcrumbs,
   CopyableId,
   DetailDrawer,
   DisabledAction,
   FilterBar,
   PageHeader,
+  PageMeaningPanel,
   PaginationFooter,
   SelectFilter,
   StatusPill,
@@ -50,6 +52,13 @@ function EscalationsPage() {
 
   return (
     <div className="flex flex-col gap-4">
+      <ConsoleBreadcrumbs
+        items={[
+          { label: "Console", to: "/console" },
+          { label: "Governance" },
+          { label: "Escalations" },
+        ]}
+      />
       <PageHeader
         title="Dual-Control / Escalation Center"
         subtitle="Substrate dual-control queue. Approve and Reject actions are disabled in P0."
@@ -61,6 +70,15 @@ function EscalationsPage() {
             <DisabledAction label="Reject" />
           </div>
         }
+      />
+      <PageMeaningPanel
+        layer="Control-plane"
+        body="Risk and admin attention queue for dual-control review."
+        bullets={[
+          "Supports operational review without enabling write actions.",
+          "Approve / Reject are disabled in P0.",
+          "Read-only.",
+        ]}
       />
       <Tabs
         tabs={STATUS_TABS.map((t) => ({ id: t.id, label: t.label }))}
@@ -100,9 +118,15 @@ function EscalationsPage() {
         <tbody>
           {data?.items.map((e) => (
             <TR key={e.escalation_id} onClick={() => setSelected(e)}>
-              <TD><CopyableId value={e.escalation_id} /></TD>
-              <TD><CopyableId value={e.source_entity_id} /></TD>
-              <TD><CopyableId value={e.target_entity_id} /></TD>
+              <TD>
+                <CopyableId value={e.escalation_id} />
+              </TD>
+              <TD>
+                <CopyableId value={e.source_entity_id} />
+              </TD>
+              <TD>
+                <CopyableId value={e.target_entity_id} />
+              </TD>
 
               <TD>{e.action_type}</TD>
               <TD>
@@ -155,7 +179,9 @@ function EscalationsPage() {
                 key={k}
                 className="grid grid-cols-[180px_1fr] gap-3 border-b border-border pb-2 last:border-0"
               >
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{k}</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                  {k}
+                </div>
                 <div className="mono break-all text-foreground">{String(v ?? "—")}</div>
               </div>
             ))}

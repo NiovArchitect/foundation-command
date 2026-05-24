@@ -9,12 +9,25 @@ export const Route = createFileRoute("/console/exchange")({
     const e = data?.exchange;
     return (
       <EcosystemDomainPage
+        breadcrumbGroup="Data, Proof & Intelligence"
+        meaning={{
+          layer: "Preview",
+          body: "Permissioned, depersonalized, requester-facing intelligence exchange.",
+          bullets: [
+            "Not individual data sale — exchange is permissioned and depersonalized.",
+            "No live pricing in P0; pricing is mocked / future.",
+          ],
+        }}
         title="Permissioned Intelligence Exchange"
         subtitle="Cohort-based exchange posture. No live pricing surface in P0."
         readiness="MOCK"
         scopeBoundary="Market pricing is mocked/future and must not be treated as live."
         reports={[
-          { id: "monetization_exchange", label: "Monetization / Intelligence Exchange", readiness: "MOCK" },
+          {
+            id: "monetization_exchange",
+            label: "Monetization / Intelligence Exchange",
+            readiness: "MOCK",
+          },
         ]}
         overview={
           <>
@@ -23,9 +36,36 @@ export const Route = createFileRoute("/console/exchange")({
             </ScopeBoundaryBanner>
             {e && (
               <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-                <MetricCard label="Monetization Events (recent)" value={e.monetization_events_recent} readiness="MOCK" source={{ kind: "route", ref: "overview.exchange.monetization_events_recent", existing: true }} />
-                <MetricCard label="Market Surface" value={e.market_surface_status} readiness="PARTIAL" source={{ kind: "route", ref: "overview.exchange.market_surface_status", existing: true }} />
-                <MetricCard label="Cohort Pricing" value={e.cohort_pricing_status} readiness="FUTURE" source={{ kind: "route", ref: "overview.exchange.cohort_pricing_status", existing: true }} />
+                <MetricCard
+                  label="Monetization Events (recent)"
+                  value={e.monetization_events_recent}
+                  readiness="MOCK"
+                  source={{
+                    kind: "route",
+                    ref: "overview.exchange.monetization_events_recent",
+                    existing: true,
+                  }}
+                />
+                <MetricCard
+                  label="Market Surface"
+                  value={e.market_surface_status}
+                  readiness="PARTIAL"
+                  source={{
+                    kind: "route",
+                    ref: "overview.exchange.market_surface_status",
+                    existing: true,
+                  }}
+                />
+                <MetricCard
+                  label="Cohort Pricing"
+                  value={e.cohort_pricing_status}
+                  readiness="FUTURE"
+                  source={{
+                    kind: "route",
+                    ref: "overview.exchange.cohort_pricing_status",
+                    existing: true,
+                  }}
+                />
               </div>
             )}
           </>

@@ -2,11 +2,13 @@ import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useBreakGlassGrants } from "@/hooks/useConsole";
 import {
+  ConsoleBreadcrumbs,
   CopyableId,
   DetailDrawer,
   DisabledAction,
   FilterBar,
   PageHeader,
+  PageMeaningPanel,
   PaginationFooter,
   ScopeBoundaryBanner,
   SelectFilter,
@@ -51,12 +53,28 @@ function BreakGlassPage() {
 
   return (
     <div className="flex flex-col gap-4">
+      <ConsoleBreadcrumbs
+        items={[
+          { label: "Console", to: "/console" },
+          { label: "Governance" },
+          { label: "Break-Glass Grants" },
+        ]}
+      />
       <PageHeader
         title="Break-Glass Review Center"
         subtitle="Break-glass grant lifecycle. Justification is intentionally excluded from all surfaces."
         readiness="PARTIAL"
         generatedAt={data?.generated_at}
         right={<DisabledAction label="Review" />}
+      />
+      <PageMeaningPanel
+        layer="Control-plane"
+        body="Emergency / dual-control access visibility."
+        bullets={[
+          "Justification is intentionally not exposed in this Console surface.",
+          "Shows grant lifecycle, usage, and review state only.",
+          "Read-only: no write actions.",
+        ]}
       />
       <ScopeBoundaryBanner tone="warn">
         Break-glass justification is intentionally excluded from list views and detail drawers.
@@ -100,8 +118,12 @@ function BreakGlassPage() {
         <tbody>
           {data?.items.map((g) => (
             <TR key={g.grant_id} onClick={() => setSelected(g)}>
-              <TD><CopyableId value={g.grant_id} /></TD>
-              <TD><CopyableId value={g.source_entity_id} /></TD>
+              <TD>
+                <CopyableId value={g.grant_id} />
+              </TD>
+              <TD>
+                <CopyableId value={g.source_entity_id} />
+              </TD>
 
               <TD>{g.action_type}</TD>
               <TD>
@@ -150,7 +172,9 @@ function BreakGlassPage() {
                 key={k}
                 className="grid grid-cols-[200px_1fr] gap-3 border-b border-border pb-2 last:border-0"
               >
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{k}</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                  {k}
+                </div>
                 <div className="mono break-all text-foreground">{String(v ?? "—")}</div>
               </div>
             ))}

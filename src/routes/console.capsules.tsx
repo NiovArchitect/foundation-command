@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useOverview } from "@/hooks/useConsole";
 import {
+  ConsoleBreadcrumbs,
   MetricCard,
   PageHeader,
+  PageMeaningPanel,
   ScopeBoundaryBanner,
 } from "@/components/console";
 
@@ -16,11 +18,26 @@ function CapsulesPage() {
   const c = data?.capsules;
   return (
     <div className="flex flex-col gap-5">
+      <ConsoleBreadcrumbs
+        items={[
+          { label: "Console", to: "/console" },
+          { label: "Data, Proof & Intelligence" },
+          { label: "Capsules" },
+        ]}
+      />
       <PageHeader
         title="Memory Capsule Explorer"
         subtitle="Capsule metadata only. No raw capsule content displayed."
         readiness={c?.readiness ?? "PARTIAL"}
         generatedAt={data?.generated_at}
+      />
+      <PageMeaningPanel
+        layer="Control-plane"
+        body="Metadata-only memory / data surface."
+        bullets={[
+          "Counts and movement signals only.",
+          "No raw capsule content is exposed by the Console.",
+        ]}
       />
       <ScopeBoundaryBanner tone="warn">
         No raw capsule content displayed. No encrypted content, content URL, plaintext, or decrypted
@@ -38,7 +55,11 @@ function CapsulesPage() {
             label="Recent Capsule Events"
             value={c.recent_capsule_events.toLocaleString()}
             readiness="PARTIAL"
-            source={{ kind: "route", ref: "overview.capsules.recent_capsule_events", existing: true }}
+            source={{
+              kind: "route",
+              ref: "overview.capsules.recent_capsule_events",
+              existing: true,
+            }}
           />
         </div>
       )}

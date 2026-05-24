@@ -5,6 +5,15 @@ export const Route = createFileRoute("/console/developer")({
   head: () => ({ meta: [{ title: "Developer Integrations — NIOV Foundation Console" }] }),
   component: () => (
     <EcosystemDomainPage
+      breadcrumbGroup="Integrations"
+      meaning={{
+        layer: "Future",
+        body: "Future developer-facing integration surface.",
+        bullets: [
+          "Scoped developer portal / SDK surfaces are FUTURE — no public SDK or API is claimed in P0.",
+          "Served through scoped portals, not substrate-wide Console access.",
+        ],
+      }}
       title="Developer & Integration Center"
       subtitle="Developer-scoped portal surfaces, APIs, SDKs, sandboxes."
       readiness="PARTIAL"
@@ -14,10 +23,27 @@ export const Route = createFileRoute("/console/developer")({
       ]}
       overview={
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          <DomainReadinessCard title="Developer Portal" description="Scoped developer portal for API keys, sandboxes, and quotas." readiness="PARTIAL" capabilities={["scoped_api_key", "sandbox", "quota"]} />
-          <DomainReadinessCard title="SDKs" description="First-party SDKs for governed memory and capsule operations." readiness="FUTURE" />
-          <DomainReadinessCard title="Webhooks" description="Developer-scoped webhook delivery and verification." readiness="FUTURE" />
-          <DomainReadinessCard title="Usage & Quotas" description="Per-developer API usage and quota posture." readiness="PARTIAL" />
+          <DomainReadinessCard
+            title="Developer Portal"
+            description="Scoped developer portal for API keys, sandboxes, and quotas."
+            readiness="PARTIAL"
+            capabilities={["scoped_api_key", "sandbox", "quota"]}
+          />
+          <DomainReadinessCard
+            title="SDKs"
+            description="First-party SDKs for governed memory and capsule operations."
+            readiness="FUTURE"
+          />
+          <DomainReadinessCard
+            title="Webhooks"
+            description="Developer-scoped webhook delivery and verification."
+            readiness="FUTURE"
+          />
+          <DomainReadinessCard
+            title="Usage & Quotas"
+            description="Per-developer API usage and quota posture."
+            readiness="PARTIAL"
+          />
         </div>
       }
       sourceMappingEntries={[

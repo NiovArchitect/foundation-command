@@ -5,6 +5,7 @@ export const Route = createFileRoute("/console/employees")({
   head: () => ({ meta: [{ title: "Employees — NIOV Foundation Console" }] }),
   component: () => (
     <EcosystemDomainPage
+      domainId="employees"
       title="Employees / Enterprise Workforce"
       subtitle="Workforce served through enterprise applications and AI teammates."
       readiness="FUTURE"
@@ -13,10 +14,26 @@ export const Route = createFileRoute("/console/employees")({
       reports={[]}
       overview={
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-          <DomainReadinessCard title="AI Teammates" description="Employee-facing AI teammates inside enterprise applications." readiness="FUTURE" />
-          <DomainReadinessCard title="Workforce Policies" description="Org-scoped policies governing employee work surfaces." readiness="FUTURE" />
-          <DomainReadinessCard title="Workforce Wallets" description="Scoped work wallets and capability assignment." readiness="FUTURE" />
-          <DomainReadinessCard title="Departures / Offboarding" description="Scoped lifecycle for employee offboarding." readiness="FUTURE" />
+          <DomainReadinessCard
+            title="AI Teammates"
+            description="Employee-facing AI teammates inside enterprise applications."
+            readiness="FUTURE"
+          />
+          <DomainReadinessCard
+            title="Workforce Policies"
+            description="Org-scoped policies governing employee work surfaces."
+            readiness="FUTURE"
+          />
+          <DomainReadinessCard
+            title="Workforce Wallets"
+            description="Scoped work wallets and capability assignment."
+            readiness="FUTURE"
+          />
+          <DomainReadinessCard
+            title="Departures / Offboarding"
+            description="Scoped lifecycle for employee offboarding."
+            readiness="FUTURE"
+          />
         </div>
       }
       sourceMappingEntries={[

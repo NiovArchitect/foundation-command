@@ -6,7 +6,9 @@ import {
   DetailDrawer,
   FilterBar,
   PaginationFooter,
+  ConsoleBreadcrumbs,
   PageHeader,
+  PageMeaningPanel,
   ScrollBox,
   SearchInput,
   SelectFilter,
@@ -53,11 +55,27 @@ function AuditCenter() {
 
   return (
     <div className="flex flex-col gap-4">
+      <ConsoleBreadcrumbs
+        items={[
+          { label: "Console", to: "/console" },
+          { label: "Governance" },
+          { label: "Audit Center" },
+        ]}
+      />
       <PageHeader
         title="Governance & Audit Center"
         subtitle="Audited events across substrate. Chain-hash integrity preserved per row."
         readiness="LIVE"
         generatedAt={data?.generated_at}
+      />
+      <PageMeaningPanel
+        layer="Control-plane"
+        body="Operator-facing audit posture — traceability of reads and actions across the substrate."
+        bullets={[
+          "Console reads are recorded as CONSOLE_READ / ADMIN_ACTION audit events.",
+          "Hash-chained per row for tamper-evidence.",
+          "Read-only: no write actions.",
+        ]}
       />
       <Tabs
         tabs={OUTCOME_TABS.map((t) => ({ id: t.id, label: t.label }))}
@@ -98,8 +116,6 @@ function AuditCenter() {
         </div>
       </FilterBar>
 
-
-
       <Table>
         <THead>
           <TR>
@@ -123,8 +139,12 @@ function AuditCenter() {
                   {e.outcome}
                 </StatusPill>
               </TD>
-              <TD><CopyableId value={e.actor_entity_id} /></TD>
-              <TD><CopyableId value={e.target_entity_id} /></TD>
+              <TD>
+                <CopyableId value={e.actor_entity_id} />
+              </TD>
+              <TD>
+                <CopyableId value={e.target_entity_id} />
+              </TD>
               <TD mono>{e.route ?? "—"}</TD>
             </TR>
           ))}
@@ -153,18 +173,25 @@ function AuditCenter() {
             <KV k="audit_id" v={<span className="mono">{selected.audit_id}</span>} />
             <KV k="event_type" v={selected.event_type} />
             <KV k="outcome" v={selected.outcome} />
-            <KV k="actor_entity_id" v={<span className="mono">{selected.actor_entity_id ?? "—"}</span>} />
-            <KV k="target_entity_id" v={<span className="mono">{selected.target_entity_id ?? "—"}</span>} />
+            <KV
+              k="actor_entity_id"
+              v={<span className="mono">{selected.actor_entity_id ?? "—"}</span>}
+            />
+            <KV
+              k="target_entity_id"
+              v={<span className="mono">{selected.target_entity_id ?? "—"}</span>}
+            />
             <KV k="route" v={<span className="mono">{selected.route ?? "—"}</span>} />
             <KV k="created_at" v={<span className="mono">{selected.created_at}</span>} />
             <KV k="chain_hash" v={<span className="mono break-all">{selected.chain_hash}</span>} />
             <div>
-              <div className="text-[10px] uppercase tracking-wider text-muted-foreground">details</div>
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                details
+              </div>
               <ScrollBox copyValue={JSON.stringify(selected.details, null, 2)} maxHeight={240}>
                 {JSON.stringify(selected.details, null, 2)}
               </ScrollBox>
             </div>
-
           </div>
         )}
       </DetailDrawer>

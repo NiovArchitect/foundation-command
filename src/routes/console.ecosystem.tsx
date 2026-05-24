@@ -1,7 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useOverview } from "@/hooks/useConsole";
-import { DomainCard, PageHeader, ScopeBoundaryBanner } from "@/components/console";
+import {
+  ConsoleBreadcrumbs,
+  DomainCard,
+  PageHeader,
+  PageMeaningPanel,
+  ScopeBoundaryBanner,
+} from "@/components/console";
 import { entitiesHrefForType } from "@/lib/entityTypes";
+import { ECOSYSTEM_DOMAIN_COPY } from "@/lib/ecosystemDomainCopy";
 
 export const Route = createFileRoute("/console/ecosystem")({
   head: () => ({ meta: [{ title: "Ecosystem Overview — NIOV Foundation Console" }] }),
@@ -14,16 +21,32 @@ function EcosystemOverview() {
 
   return (
     <div className="flex flex-col gap-5">
+      <ConsoleBreadcrumbs
+        items={[
+          { label: "Console", to: "/console" },
+          { label: "Entities & Ecosystem" },
+          { label: "Ecosystem Overview" },
+        ]}
+      />
       <PageHeader
         title="Ecosystem Overview"
         subtitle="Foundation-supported actor domains. Each domain card explains who it serves, readiness, and the entity slice in the registry."
         readiness="PARTIAL"
         generatedAt={data?.generated_at}
       />
+      <PageMeaningPanel
+        layer={ECOSYSTEM_DOMAIN_COPY.ecosystem.layer}
+        body={ECOSYSTEM_DOMAIN_COPY.ecosystem.whatItIs}
+        bullets={[
+          ECOSYSTEM_DOMAIN_COPY.ecosystem.whyItMatters,
+          ECOSYSTEM_DOMAIN_COPY.ecosystem.foundationRelation,
+          ECOSYSTEM_DOMAIN_COPY.ecosystem.otzarRelation,
+        ]}
+      />
       <ScopeBoundaryBanner>
-        NIOV Foundation supports each domain below. The Console exposes operator-level metadata
-        and readiness only. End users receive scoped application-side or portal-side experiences,
-        not substrate-wide Console access.
+        NIOV Foundation supports each domain below. The Console exposes operator-level metadata and
+        readiness only. End users receive scoped application-side or portal-side experiences, not
+        substrate-wide Console access.
       </ScopeBoundaryBanner>
 
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">

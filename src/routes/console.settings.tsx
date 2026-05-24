@@ -1,11 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DisabledAction, PageHeader, ScopeBoundaryBanner } from "@/components/console";
+import {
+  ConsoleBreadcrumbs,
+  DisabledAction,
+  PageHeader,
+  PageMeaningPanel,
+  ScopeBoundaryBanner,
+} from "@/components/console";
 
 export const Route = createFileRoute("/console/settings")({
   head: () => ({ meta: [{ title: "Settings / Policy Registry — NIOV Foundation Console" }] }),
   component: () => (
     <div className="flex flex-col gap-5">
-      <PageHeader title="Settings / Policy Registry" subtitle="Policy registry surface. Read-only in P0." readiness="FUTURE" />
+      <ConsoleBreadcrumbs
+        items={[
+          { label: "Console", to: "/console" },
+          { label: "Administration" },
+          { label: "Settings" },
+        ]}
+      />
+      <PageHeader
+        title="Settings / Policy Registry"
+        subtitle="Policy registry surface. Read-only in P0."
+        readiness="FUTURE"
+      />
+      <PageMeaningPanel
+        layer="Future"
+        body="Future policy registry / admin settings surface."
+        bullets={[
+          "Read-only in P0 — policy editing is a write surface and is not enabled.",
+          "Substrate-level policy entries are a future surface.",
+        ]}
+      />
       <ScopeBoundaryBanner>
         Policy editing is a write surface and is not enabled in P0. The Console is read-only.
       </ScopeBoundaryBanner>

@@ -9,21 +9,53 @@ export const Route = createFileRoute("/console/agents")({
     const a = data?.agents;
     return (
       <EcosystemDomainPage
+        breadcrumbGroup="Data, Proof & Intelligence"
+        meaning={{
+          layer: "Preview",
+          body: "Agent, hive, and swarm orchestration readiness surface.",
+          bullets: [
+            "Orchestration preview — COSMP/DBGI execution-plane telemetry is FUTURE (not yet wired).",
+            "Read-only readiness view; no agent control actions.",
+          ],
+        }}
         title="Agent / Hive / Swarm Operations"
         subtitle="Coordination readiness across agent surfaces. COSMP/DBGI telemetry is FUTURE."
         readiness="PARTIAL"
         entityType="agent"
         scopeBoundary="AI agents, devices, and robotics systems are Foundation-supported entities governed through wallets, scopes, policies, and event surfaces — not human Console users."
         reports={[
-          { id: "agent_hive_swarm", label: "Agent / Hive / Swarm Operations", readiness: "PARTIAL" },
+          {
+            id: "agent_hive_swarm",
+            label: "Agent / Hive / Swarm Operations",
+            readiness: "PARTIAL",
+          },
         ]}
         overview={
           <>
             {a && (
               <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-                <MetricCard label="Feedback Loops" value={a.feedback_loops} readiness="PARTIAL" source={{ kind: "route", ref: "overview.agents.feedback_loops", existing: true }} />
-                <MetricCard label="Hive Surface" value={a.hive_surface_status} readiness="PARTIAL" source={{ kind: "route", ref: "overview.agents.hive_surface_status", existing: true }} />
-                <MetricCard label="COSMP / DBGI Telemetry" value={a.cosmp_dbgi_telemetry_status} readiness="FUTURE" source={{ kind: "proposed", ref: "COSMP/DBGI", existing: false }} />
+                <MetricCard
+                  label="Feedback Loops"
+                  value={a.feedback_loops}
+                  readiness="PARTIAL"
+                  source={{ kind: "route", ref: "overview.agents.feedback_loops", existing: true }}
+                />
+                <MetricCard
+                  label="Hive Surface"
+                  value={a.hive_surface_status}
+                  readiness="PARTIAL"
+                  source={{
+                    kind: "route",
+                    ref: "overview.agents.hive_surface_status",
+                    existing: true,
+                  }}
+                />
+                <MetricCard
+                  label="COSMP / DBGI Telemetry"
+                  value={a.cosmp_dbgi_telemetry_status}
+                  readiness="FUTURE"
+                  source={{ kind: "proposed", ref: "COSMP/DBGI", existing: false }}
+                />
               </div>
             )}
             <ScopeBoundaryBanner>
